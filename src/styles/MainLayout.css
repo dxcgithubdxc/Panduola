@@ -1,0 +1,61 @@
+.logo {
+    width: 120px;
+    height: 64px;
+    margin-right:30px;
+    background:url(../assets/shop-logo.png) no-repeat center center;
+    background-size:cover;
+    float: left;
+  }
+  .downloadAPP{
+      width:170px;
+      padding:10px;
+      border:2px solid #fa6543;
+      border-radius:10px;
+      height:200px;
+      background: #fff;
+  }
+  .appImg{width:150px;height:150px;}
+  .appText{width:150px;height:40px;line-height: 40px;text-align: center;color:#fa6543}
+.main {
+    padding-top:2px;
+    flex: 1 0 auto;
+    height:100%;
+    background: #f0f2f5;
+    min-height: 280px;
+}
+.footerSecond{
+    padding:30px 0;
+    text-align: center;
+    color:#c9c9c9;
+}
+.footerIcon1{
+    display: inline-block;
+    background: url(../assets/icon_2.png) no-repeat;
+    height: 18px;
+    width: 23px;
+    background-position: -108px 0;
+}
+.footerIcon2{
+    display: inline-block;
+    background: url(../assets/icon_2.png) no-repeat;
+    height: 18px;
+    width: 18px;
+    background-position: -89px 0;
+}
+.footerHelp{
+    display: inline-block;
+    width: 92px;
+    height: 26px;
+    background-color: #3c3c3c;
+    line-height: 26px;
+    text-align: center;
+    border: #707070 solid 1px;
+    border-radius: 4px;
+    margin-left: 16px;
+    font-size: 13px;
+    color: #bfbfbf;
+}
+.copyRight{
+    color:#959595;
+    font-size: 11px;
+}

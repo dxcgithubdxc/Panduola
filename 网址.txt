@@ -1,0 +1,2 @@
+start£ºnpm start
+build£ºnpm run build
