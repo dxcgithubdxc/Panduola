@@ -11,14 +11,14 @@ export default class MainLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      defaultSelectedKeys:"",
+      defaultSelectedKeys:"/home",
     };
   }
   UNSAFE_componentWillMount(){
     console.log(this.props);
     //设置选中的页面路由
-    // var pathname=this.props.location.pathname;
-    // this.setState({defaultSelectedKeys:pathname.substring(1)})
+    var pathname=this.props.location.pathname;
+    this.setState({defaultSelectedKeys:pathname})
   }
   componentDidMount(){}
    downloadAPP(){
@@ -27,6 +27,7 @@ export default class MainLayout extends Component {
  
   render() {
     const { children} = this.props;
+    const{defaultSelectedKeys}=this.state;
     const { Header, Content, Footer } = Layout;
     const menu=(<div className={styles.downloadAPP} onClick={this.downloadAPP.bind(this)}>
       <img className={styles.appImg} alt="" src={ewm1}/>
@@ -40,7 +41,7 @@ export default class MainLayout extends Component {
           <Menu
             theme="light"
             mode="horizontal"
-            defaultSelectedKeys={['/home']}
+            defaultSelectedKeys={[defaultSelectedKeys]}
             style={{ lineHeight: '64px' }}
           >
             <Menu.Item key="/home"><Link to="/home">主页</Link></Menu.Item>

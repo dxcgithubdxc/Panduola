@@ -10,6 +10,7 @@ i{display: inline-block;}
 .gameServices{
     background: #fff;
     height:100px;
+    border-bottom: #eeeeee solid 1px;
 }
 .serviceTitle{
     width:100%;
@@ -17,6 +18,7 @@ i{display: inline-block;}
     line-height: 100px;
     background: #f9f9f9;
     text-align: center;
+    border-bottom: #eeeeee solid 1px;
 }
 .gameItem{
     float:left;
@@ -26,6 +28,113 @@ i{display: inline-block;}
     margin-top: 10px;
     cursor: pointer;
 }
-.listiconLOL{
-    
+.selectI{
+    width:60px;height:60px;background:url(https://res.tuwan.com/templet/play/playlist/images/icon.png?030885) no-repeat;
+}
+.gameItem2{
+    float:left;
+    width:90px;
+    height:100px;
+}
+.selectTip{
+    cursor: pointer;
+    width:80px;
+    height:40px;
+    line-height: 40px;
+    margin: 30px auto;
+    text-align: center;
+    border-radius: 20px;
+}
+.sortServiceDiv{
+    padding-bottom:20px;
+}
+.sortBtn{margin-right: 30px;}
+.serviceSpan{
+    padding-bottom: 30px;
+}
+.serviceItem{
+    width:200px;
+    height:300px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.serviceItem:hover{box-shadow:0 0 10px 2px #ccc;}
+.serviceImg{
+    width:200px;
+    height:200px;
+}
+.serviceMsg{
+    padding:10px;
+    height:100px;
+    width:200px;
+    /* background: yellow; */
+}
+.serviceMsg1{width:180px;height:30px;}
+.serviceMsg2{
+    width:180px;
+    height:20px;
+    font-size: 14px;
+    color: #1dd3b8;
+    line-height:30px;
+}
+.serviceItemName{
+    float:left;
+    font-size: 18px;
+    color: #333333;
+    width: 130px;
+    height:30px;
+    line-height:30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.serviceItemTip{
+    color: #fff;
+    font-size: 12px;
+    background: #eed7ca;
+    padding: 0 5px;
+    border-radius: 2px;
+    float:right;
+    margin-top: 8px;
+}
+.serviceSexAge{
+    color: #fff;
+    font-size: 12px;
+    padding: 0 5px;
+    border-radius: 2px;
+    float:left;
+    margin-top: 8px;
+}
+.servicePosition{
+    float:left;
+    color: #666666;
+    width: 66px;
+    margin: 8px 0 0 5px;
+    font-size: 11px;
+    overflow: hidden;
+    white-space: nowrap;
+    word-break: keep-all;
+    text-overflow: ellipsis;
+}
+.servicePrice{
+    float:right;
+    font-size: 14px;
+    color: #fa323c;
+    height:30px;
+    line-height: 30px;
+}
+.serviceOnline{
+    width: 35px;
+    height: 12px;
+    background-position: -19px 0;
+    margin: 5px 0 0 -20px;
+    background: url(https://static.tuwan.com/templet/teach/play/list/images/side.png);
+}
+.bangList{
+    background: #fff;
+    padding:10px;
+    border-radius: 5px;
+    margin-bottom: 30px;
 }
