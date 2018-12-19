@@ -8,6 +8,11 @@ import zb05 from '../assets/zb05.jpg';
 import zb06 from '../assets/zb06.jpg';
 import zb07 from '../assets/zb07.jpg';
 import zb08 from '../assets/zb08.jpg';
+import bang1 from  '../assets/bang1.jpg';
+import bang2 from  '../assets/bang2.jpg';
+import bang3 from  '../assets/bang3.jpg';
+import bang4 from  '../assets/bang4.jpg';
+import bang5 from  '../assets/bang5.jpg';
 
 export default class PlayList extends React.Component {
 	constructor(props) {
@@ -23,6 +28,7 @@ export default class PlayList extends React.Component {
             sortServiceList:[],//服务排序 0-2 0是热门 1是新人 2是全部
             selectedSsortService:2,
             servicerList:[],//主播列表
+            bangList:[],//右边的榜单
         }
     }
     UNSAFE_componentWillMount(){
@@ -181,6 +187,13 @@ export default class PlayList extends React.Component {
         ];
         const supervisorSexList=[{title:'全部',key:2},{title:'女神',key:0},{title:'男神',key:1},];
         const sortServiceList=[{title:'综合排序',key:2},{title:'热门',key:0},{title:'新人',key:1},];
+        const bangList=[
+            {img:bang1,name:"包饭麻烦",orderNum:123},
+            {img:bang1,name:"包饭麻烦",orderNum:123},
+            {img:bang1,name:"包饭麻烦",orderNum:123},
+            {img:bang1,name:"包饭麻烦",orderNum:123},
+            {img:bang1,name:"包饭麻烦",orderNum:123},
+        ]
         this.setState({
             gameServiceList,
             amuseServiceList,
@@ -188,6 +201,7 @@ export default class PlayList extends React.Component {
             supervisorSexList,
             sortServiceList,
             servicerList,
+            bangList,
         })
     }
     componentDidMount(){
@@ -231,6 +245,7 @@ export default class PlayList extends React.Component {
             sortServiceList,
             selectedSsortService,
             servicerList,
+            bangList,
         }=this.state;
         return ( <div > 
             <div className={styles.container}>
@@ -328,13 +343,40 @@ export default class PlayList extends React.Component {
                  </Col>
                  <Col span={5}>
                     <div className={styles.bangList}>
-                        <div className={styles.hotList}>234234</div>
+                        <div className={styles.bangListTitle}>热度榜</div>
+                            {bangList.map((item,index)=>{return(
+                                <div className={styles.bangListItem} key={index}>
+                                    <img className={styles.bangListImg} src={bang1} alt=""/>
+                                    <div className={styles.bangListMsg}>
+                                        <div className={styles.bangListItemName}>包饭饭</div>
+                                        <div className={styles.bangListItemNum}>接单：110</div>
+                                    </div>
+                                </div>
+                            )})}
                     </div>
                     <div className={styles.bangList}>
-                        <div className={styles.hotList}>234234</div>
+                        <div className={styles.bangListTitle}>礼物榜</div>
+                            {bangList.map((item,index)=>{return(
+                                <div className={styles.bangListItem} key={index}>
+                                    <img className={styles.bangListImg} src={bang1} alt=""/>
+                                    <div className={styles.bangListMsg}>
+                                        <div className={styles.bangListItemName}>包饭饭</div>
+                                        <div className={styles.bangListItemNum}>接单：110</div>
+                                    </div>
+                                </div>
+                            )})}
                     </div>
                     <div className={styles.bangList}>
-                        <div className={styles.hotList}>234234</div>
+                        <div className={styles.bangListTitle}>消费榜</div>
+                            {bangList.map((item,index)=>{return(
+                                <div className={styles.bangListItem} key={index}>
+                                    <img className={styles.bangListImg} src={bang1} alt=""/>
+                                    <div className={styles.bangListMsg}>
+                                        <div className={styles.bangListItemName}>包饭饭</div>
+                                        <div className={styles.bangListItemNum}>接单：110</div>
+                                    </div>
+                                </div>
+                            )})}
                     </div>
                  </Col>
                 </Row>

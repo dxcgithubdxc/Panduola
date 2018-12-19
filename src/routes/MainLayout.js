@@ -18,7 +18,12 @@ export default class MainLayout extends Component {
     console.log(this.props);
     //设置选中的页面路由
     var pathname=this.props.location.pathname;
-    this.setState({defaultSelectedKeys:pathname})
+    if(pathname=='/'){
+      this.setState({defaultSelectedKeys:'/home'});
+    }else{
+      this.setState({defaultSelectedKeys:pathname});
+    }
+    
   }
   componentDidMount(){}
    downloadAPP(){

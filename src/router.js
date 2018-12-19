@@ -24,8 +24,8 @@ function RouterConfig({ history, app }) {
         <ConnectedRouter history={history}>
         {/*Layout以外是登录、404等其他页面的所有路由*/}
             <Switch>
-                <Route path="/" exact component={IndexPage} />
                 <App>
+                <Route path="/" exact component={IndexPage} />
                     <Switch>
                         <Route path="/home" exact component={Home} />
                         <Route path="/playlist" exact component={PlayList} />
