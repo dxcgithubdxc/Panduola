@@ -25,7 +25,7 @@ UNSAFE_componentWillMount(){
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
                         <Menu.Item key="1">
                         <Icon type="user" />
-                        <span className="nav-text">nav 1</span>
+                        <span className="nav-text">6666</span>
                         </Menu.Item>
                         <Menu.Item key="2">
                         <Icon type="video-camera" />
