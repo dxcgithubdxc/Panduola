@@ -9,7 +9,7 @@ UNSAFE_componentWillMount(){
   const path={pathname: '/home'}
   history.push(path);
 }
-    render() {return ( <div > </div>)}
+    render() {return ( <div></div>)}
 }
 
 

@@ -20,19 +20,23 @@ function RouterConfig({ history, app }) {
         models: () => [import('./models/users')],
         component: () => import('./routes/PlayList')
     })
+    const Enter = dynamic({
+        app,
+        models: () => [import('./models/users')],
+        component: () => import('./routes/Enter')
+    })
     return (
         <ConnectedRouter history={history}>
         {/*Layout以外是登录、404等其他页面的所有路由*/}
             <Switch>
                 <App>
-                <Route path="/" exact component={IndexPage} />
-                    <Switch>
-                        <Route path="/home" exact component={Home} />
-                        <Route path="/playlist" exact component={PlayList} />
-                        
-                    </Switch>
+                    <Route path="/" exact component={IndexPage} />
+                    <Route path="/home" exact component={Home} />
+                    <Route path="/playlist" exact component={PlayList} />
+                    <Route path="/enter" exact component={Enter} />
                 </App>
             </Switch>
+            
         </ConnectedRouter>
     )
 }
