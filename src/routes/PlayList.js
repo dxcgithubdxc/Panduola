@@ -18,6 +18,7 @@ export default class PlayList extends React.Component {
 	constructor(props) {
         super(props);
         this.state={
+            serviceList:[],//服务列表
             gameServiceList:[],//游戏服务
             amuseServiceList:[],//娱乐服务
             selectedServiceIndex:1,//选中的服务类型1-14
@@ -189,10 +190,10 @@ export default class PlayList extends React.Component {
         const sortServiceList=[{title:'综合排序',key:2},{title:'热门',key:0},{title:'新人',key:1},];
         const bangList=[
             {img:bang1,name:"包饭麻烦",orderNum:123},
-            {img:bang1,name:"包饭麻烦",orderNum:123},
-            {img:bang1,name:"包饭麻烦",orderNum:123},
-            {img:bang1,name:"包饭麻烦",orderNum:123},
-            {img:bang1,name:"包饭麻烦",orderNum:123},
+            {img:bang2,name:"包饭麻烦",orderNum:123},
+            {img:bang3,name:"包饭麻烦",orderNum:123},
+            {img:bang4,name:"包饭麻烦",orderNum:123},
+            {img:bang5,name:"包饭麻烦",orderNum:123},
         ]
         this.setState({
             gameServiceList,
@@ -207,29 +208,23 @@ export default class PlayList extends React.Component {
     componentDidMount(){
     
     }
-    //选择游戏服务
-    selectGameService(item){
+    //选择游戏服务 或者娱乐服务
+    selectService(item){
         this.setState({
             selectedServiceIndex:item.gameServiceNum,
             roteTypeList:item.roteTypeList,
             selectedGradeTyleIndex:item.roteTypeList[0].key,
         });
     }
-    // 选择娱乐服务
-    selectAmuseService(item){
-        console.log(item);
-        this.setState({
-            selectedServiceIndex:item.gameServiceNum,
-            roteTypeList:item.roteTypeList,
-            selectedGradeTyleIndex:item.roteTypeList[0].key,
-        });
-    }
+    //选择服务的等级分类
     selectedGradeTyle(item){
         this.setState({selectedGradeTyleIndex:item.key});
     }
+    //选择服务的导师性别
     selectedSupervisorSex(key){
         this.setState({selectedSupervisorSex:key});
     }
+    //选择主播排序
     selectedSsortService(key){
         this.setState({selectedSsortService:key});
     }
@@ -257,7 +252,7 @@ export default class PlayList extends React.Component {
                             <Col span={4}><div className={styles.serviceTitle}>游戏服务</div></Col>
                             <Col span={20}>
                                 {gameServiceList.map((item,index)=>{return(
-                                    <div className={styles.gameItem} key={index} onClick={this.selectGameService.bind(this,item)}>
+                                    <div className={styles.gameItem} key={index} onClick={this.selectService.bind(this,item)}>
                                         <i className={styles.selectI} style={selectedServiceIndex===item.gameServiceNum?{backgroundPosition:item.selectedBackgroundPosition}:{backgroundPosition:item.backgroundPosition}}/>
                                         <br/>
                                         <span style={selectedServiceIndex===item.gameServiceNum?{color:'#fa6543'}:{}}>{item.title}</span>
@@ -272,7 +267,7 @@ export default class PlayList extends React.Component {
                             <Col span={4}><div className={styles.serviceTitle}>娱乐服务</div></Col>
                             <Col span={20}>
                                 {amuseServiceList.map((item,index)=>{return(
-                                    <div className={styles.gameItem} key={index} onClick={this.selectAmuseService.bind(this,item)}>
+                                    <div className={styles.gameItem} key={index} onClick={this.selectService.bind(this,item)}>
                                         <i className={styles.selectI} style={selectedServiceIndex===item.gameServiceNum?{backgroundPosition:item.selectedBackgroundPosition}:{backgroundPosition:item.backgroundPosition}}/>
                                         <br/>
                                         <span style={selectedServiceIndex===item.gameServiceNum?{color:'#fa6543'}:{}}>{item.title}</span>
@@ -346,10 +341,10 @@ export default class PlayList extends React.Component {
                         <div className={styles.bangListTitle}>热度榜</div>
                             {bangList.map((item,index)=>{return(
                                 <div className={styles.bangListItem} key={index}>
-                                    <img className={styles.bangListImg} src={bang1} alt=""/>
+                                    <img className={styles.bangListImg} src={item.img} alt=""/>
                                     <div className={styles.bangListMsg}>
-                                        <div className={styles.bangListItemName}>包饭饭</div>
-                                        <div className={styles.bangListItemNum}>接单：110</div>
+                                        <div className={styles.bangListItemName}>{item.name}</div>
+                                        <div className={styles.bangListItemNum}>接单：{item.orderNum}</div>
                                     </div>
                                 </div>
                             )})}
@@ -358,10 +353,10 @@ export default class PlayList extends React.Component {
                         <div className={styles.bangListTitle}>礼物榜</div>
                             {bangList.map((item,index)=>{return(
                                 <div className={styles.bangListItem} key={index}>
-                                    <img className={styles.bangListImg} src={bang1} alt=""/>
+                                    <img className={styles.bangListImg} src={item.img} alt=""/>
                                     <div className={styles.bangListMsg}>
-                                        <div className={styles.bangListItemName}>包饭饭</div>
-                                        <div className={styles.bangListItemNum}>接单：110</div>
+                                        <div className={styles.bangListItemName}>{item.name}</div>
+                                        <div className={styles.bangListItemNum}>接单：{item.orderNum}</div>
                                     </div>
                                 </div>
                             )})}
@@ -370,10 +365,10 @@ export default class PlayList extends React.Component {
                         <div className={styles.bangListTitle}>消费榜</div>
                             {bangList.map((item,index)=>{return(
                                 <div className={styles.bangListItem} key={index}>
-                                    <img className={styles.bangListImg} src={bang1} alt=""/>
+                                    <img className={styles.bangListImg} src={item.img} alt=""/>
                                     <div className={styles.bangListMsg}>
-                                        <div className={styles.bangListItemName}>包饭饭</div>
-                                        <div className={styles.bangListItemNum}>接单：110</div>
+                                        <div className={styles.bangListItemName}>{item.name}</div>
+                                        <div className={styles.bangListItemNum}>接单：{item.orderNum}</div>
                                     </div>
                                 </div>
                             )})}

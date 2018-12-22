@@ -7,6 +7,7 @@ import consume1 from '../assets/consume1.jpg';
 import consume2 from '../assets/consume2.jpg';
 import consume3 from '../assets/consume3.jpg';
 import consume4 from '../assets/consume4.jpg';
+console.log(styles);
 export default class MainLayout extends Component {
   constructor(props) {
     super(props);

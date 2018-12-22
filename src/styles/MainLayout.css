@@ -3,11 +3,10 @@
     background: #fff;
 }
 .logo {
-    width: 120px;
+    width: 150px;
     height: 64px;
-    margin-right:30px;
-    background:url(../assets/shop-logo.png) no-repeat center center;
-    background-size:cover;
+    background:url(../assets/yuewanlogo.png) no-repeat center center;
+    background-size:100%;
     float: left;
   }
   .downloadAPP{
