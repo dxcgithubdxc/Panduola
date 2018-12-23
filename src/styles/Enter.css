@@ -1,0 +1,62 @@
+.container{
+    width:1120px;
+    margin:0  auto;
+}
+.avater{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+}
+.partTop{
+    padding:10px 0 20px 0;
+    border-bottom: #eeeeee solid 1px;
+}
+.partTitle{
+    font-size: 20px;
+    font-weight: bold;
+}
+.partTopMust{
+    color:red;
+}
+.partContent{
+    padding:10px 0 20px 0;
+}
+.partItem{
+    padding:10px 0 10px 0;
+}
+.partItemDiv{
+    height:32px;
+    line-height: 32px;
+}
+.partItemInput{
+    width:200px;
+}
+.serviceItem{
+    width:180px;
+    height:140px;
+}
+.serviceItemImg{
+    display: block;
+    margin-left: 50px;
+    width:80px;
+    height:80px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+.serviceItemName{
+    height:20px;
+    line-height: 20px;
+    text-align: center;
+}
+.serviceIteStatus{
+    height:20px;
+    line-height: 20px;
+    width:180px;
+    font-size: 14px;
+    text-align: center;
+}
+.submitDiv{
+    width:1120px;
+    text-align: center;
+    padding: 20px 0;
+}
