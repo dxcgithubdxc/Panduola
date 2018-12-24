@@ -54,7 +54,7 @@ export default class MainLayout extends Component {
               <Menu.Item key="/home"><Link to="/home">主页</Link></Menu.Item>
               <Menu.Item key="/playlist"><Link to="/playlist">约陪玩</Link></Menu.Item>
               <Menu.Item key="setting:3">约战队</Menu.Item>
-              <Menu.Item key="setting:4">特惠专区</Menu.Item>
+              <Menu.Item key="/preference"><Link to="/preference">特惠专区</Link></Menu.Item>
               <Menu.Item key="setting:5">充值</Menu.Item>
                 <Dropdown key="setting:a" overlay={menu} placement="bottomLeft">
                   <Button icon="download">APP下载</Button>
@@ -69,7 +69,7 @@ export default class MainLayout extends Component {
         <Content><div className={styles.main}>{children}</div></Content>
         {/**页脚 */}
         <div className={styles.footerBg}>
-          <Footer style={{textAlign: 'center',background:'#535353',width:'1420px',margin:'0 auto',padding:'24px 0'}}>
+          <Footer style={{textAlign: 'center',background:'#535353',maxWidth:'1420px',minWidth:'1200px',margin:'0 auto',padding:'24px 0'}}>
             <Row>
               <Col span={6}><img alt="" src={consume1}/></Col>
               <Col span={6}><img alt="" src={consume2}/></Col>

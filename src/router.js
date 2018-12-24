@@ -25,6 +25,11 @@ function RouterConfig({ history, app }) {
         models: () => [import('./models/users')],
         component: () => import('./routes/Enter')
     })
+    const Preference = dynamic({
+        app,
+        models: () => [import('./models/users')],
+        component: () => import('./routes/Preference')
+    })
     return (
         <ConnectedRouter history={history}>
         {/*Layout以外是登录、404等其他页面的所有路由*/}
@@ -34,6 +39,8 @@ function RouterConfig({ history, app }) {
                     <Route path="/home" exact component={Home} />
                     <Route path="/playlist" exact component={PlayList} />
                     <Route path="/enter" exact component={Enter} />
+                    <Route path="/preference" exact component={Preference} />
+                    
                 </App>
             </Switch>
             

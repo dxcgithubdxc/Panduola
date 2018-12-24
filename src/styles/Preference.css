@@ -1,0 +1,12 @@
+/*页面主体公共部分*/
+.container{
+    width:1120px;
+    margin:0 auto;
+    /* padding:0 200px; */
+    background: #f5f5f5;
+}
+.banner{
+    height:400px;
+    width:100%;
+    background: url(../assets/preferencebanner.jpg);
+}
