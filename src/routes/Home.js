@@ -46,36 +46,36 @@ export default class Home extends React.Component {
             {title:'英勇黑铁',supervisorName:'浪子彦', palyItem:'穿越火线', price:'1456',tips:['激情四射','颜值担当'],image:zb08,},
         ];
         const newShowArr =[
-             {newShowImage:newShow1,newShowName:'jiajia',newShowPosition:'上海',newShowSex:'famale',newShowAge:21,},
-             {newShowImage:newShow2,newShowName:'jiajia',newShowPosition:'上海',newShowSex:'famale',newShowAge:22,},
-             {newShowImage:newShow3,newShowName:'jiajia',newShowPosition:'上海',newShowSex:'famale',newShowAge:25,},
-             {newShowImage:newShow4,newShowName:'jiajia',newShowPosition:'上海',newShowSex:'famale',newShowAge:23,},
-             {newShowImage:newShow5,newShowName:'jiajia',newShowPosition:'上海',newShowSex:'male',newShowAge:24,},
+             {newShowImage:newShow1,newShowName:'jiajia',newShowPosition:'上海',newShowSex:1,newShowAge:21,},
+             {newShowImage:newShow2,newShowName:'jiajia',newShowPosition:'上海',newShowSex:1,newShowAge:22,},
+             {newShowImage:newShow3,newShowName:'jiajia',newShowPosition:'上海',newShowSex:1,newShowAge:25,},
+             {newShowImage:newShow4,newShowName:'jiajia',newShowPosition:'上海',newShowSex:1,newShowAge:23,},
+             {newShowImage:newShow5,newShowName:'jiajia',newShowPosition:'上海',newShowSex:0,newShowAge:24,},
              {newShowImage:newShow6,newShowName:'jiajia',newShowPosition:'上海',newShowSex:'fmale',newShowAge:26,},
         ];
         const exampleHotArr=[
-            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:'famale',exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
-            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:'male',exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
-            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:'male',exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
-            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:'male',exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
-            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:'male',exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
-            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:'famale',exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
-            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:'famale',exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
-            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:'male',exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
-            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:'famale',exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
-            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:'famale',exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
+            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:1,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
+            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:0,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
+            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:0,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
+            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:0,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
+            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:0,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
+            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:1,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
+            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:1,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
+            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:0,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
+            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:1,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
+            {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:1,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
         ];
         const exampleGiftArr=[
-            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:'famale',exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
-            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:'male',exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
-            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:'famale',exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
-            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:'famale',exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
-            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:'male',exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
-            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:'famale',exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
-            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:'famale',exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
-            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:'male',exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
-            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:'famale',exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
-            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:'male',exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
+            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:1,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
+            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:0,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
+            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:1,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
+            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:1,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
+            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:0,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
+            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:1,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
+            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:1,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
+            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:0,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
+            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:1,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
+            {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:0,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
         ];
         const exampleRichArr=[
             {exampleRichImg:example1,exampleRichName:'xifeng',exampleRichNumber:10086,},
@@ -158,7 +158,7 @@ export default class Home extends React.Component {
                                             <div className={styles.newShowPosition1}>{item.newShowPosition}</div>
                                         </div>
                                         <div className={styles.newShowItem1}>
-                                            <div className={item.newShowSex==='male'?styles.newShowPositionMale:styles.newShowPositionFamale}>{item.newShowSex==='male'?'♂':'♀'}{item.newShowAge}</div>
+                                            <div className={item.newShowSex===0?styles.newShowPositionMale:styles.newShowPositionFamale}>{item.newShowSex===0?'♂':'♀'}{item.newShowAge}</div>
                                         </div>
                                         </div>
                                     </div>
@@ -180,7 +180,7 @@ export default class Home extends React.Component {
                                             <div className={styles.exampleItemDetail}>
                                                 <div className={styles.exampleItemDetail0}>
                                                     <div className={styles.exampleName}>{item.exampleHotName}</div>
-                                                    <div className={item.exampleHotSex==='male'?styles.exampleMale:styles.exampleFamale}>{item.exampleHotSex==='male'?'♂':'♀'}{item.exampleHotAge}</div>
+                                                    <div className={item.exampleHotSex===0?styles.exampleMale:styles.exampleFamale}>{item.exampleHotSex===0?'♂':'♀'}{item.exampleHotAge}</div>
                                                     <div className={styles.examplePosition}>{item.exampleHotPosition}</div>
                                                 </div>
                                                 <div className={styles.exampleItemDetail0}>
@@ -202,7 +202,7 @@ export default class Home extends React.Component {
                                             <div className={styles.exampleItemDetail}>
                                                 <div className={styles.exampleItemDetail0}>
                                                     <div className={styles.exampleName}>{item.exampleGiftName}</div>
-                                                    <div className={item.exampleGiftSex==='male'?styles.exampleMale:styles.exampleFamale}>{item.exampleGiftSex==='male'?'♂':'♀'}{item.exampleGiftAge}</div>
+                                                    <div className={item.exampleGiftSex===0?styles.exampleMale:styles.exampleFamale}>{item.exampleGiftSex===0?'♂':'♀'}{item.exampleGiftAge}</div>
                                                     <div className={styles.examplePosition}>{item.exampleGiftPosition}</div>
                                                 </div>
                                                 <div className={styles.exampleItemDetail0}>

@@ -10,3 +10,59 @@
     width:100%;
     background: url(../assets/preferencebanner.jpg);
 }
+.selectItem{
+    height:130px;
+    padding:30px 0;
+    background: white;
+}
+.selectItemImg{
+    cursor: pointer;
+    margin-right:20px;
+    margin-left:10px;
+}
+.preferenceList{
+    padding:20px 0;
+}
+.preferenceItem{
+    overflow: hidden;
+    border-radius: 5px;
+    width:180px;
+    height:250px;
+    background: white;
+    cursor: pointer;
+}
+.preferenceItem:hover{
+    box-shadow:0 0 10px 2px #ccc;
+}
+.preferenceItemImg{
+    width:180px;
+    height:180px;
+}
+.preferenceItemMsg{
+    height:70px;
+    padding:0 10px;
+}
+.preferenceItemName{
+    height:35px;
+    line-height: 35px;
+}
+.preferenceItemPP{
+    height:35px;
+    width:160px;
+}
+.preferenceItemPosition{
+    width:100px;
+    height:35px;
+    line-height: 35px;
+    float:left;
+    font-size: 14px;
+    overflow: hidden;
+}
+.preferenceItemPrice{
+    width:60px;
+    height:35px;
+    line-height: 35px;
+    float:left;
+    font-size: 16px;
+    color:#fa323c;
+}

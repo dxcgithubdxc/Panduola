@@ -44,7 +44,7 @@ export default class MainLayout2 extends React.Component {
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={[defaultSelectedKeys]}>
                         <Menu.Item key="1"><Icon type="solution" /><span>我的订单</span></Menu.Item>
                         <Menu.Item key="2"><Icon type="file-done" /><span >交易记录</span></Menu.Item>
-                        <Menu.Item key="3"><Link to=""> <Icon type="user" /> <span >个人资料</span></Link></Menu.Item>
+                        <Menu.Item key="3"><Link to=""><Icon type="user" /> <span >个人资料</span></Link></Menu.Item>
                         <Menu.Item key="/enter"><Link to="/enter"><Icon type="user" /><span >我的导师资料</span></Link></Menu.Item>
                     </Menu>
                 </Sider>

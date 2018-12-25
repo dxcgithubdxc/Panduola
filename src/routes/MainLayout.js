@@ -43,7 +43,7 @@ export default class MainLayout extends Component {
       <Layout className="layout">
       {/**导航条 */}
         <div className={styles.headerBg}>
-          <Header style={{background:'#fff',width:'1420px',margin:'0 auto',padding:'24px 0'}}>
+          <Header style={{background:'#fff',width:'1420px'}}>
             <div className={styles.logo}/>
             <Menu
               theme="light"
