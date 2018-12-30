@@ -261,7 +261,7 @@ export default class Enter extends React.Component {
                     </div>
                     <div className={styles.partItem}>
                         <Row>
-                            <Col span={4}><div className={styles.partItemDiv}>（兴趣爱好）个性签名：</div></Col>
+                            <Col span={4}><div className={styles.partItemDiv}>（选填）兴趣爱好：</div></Col>
                             <Col span={20}>
                                 <div className={styles.partItemDiv}><Input placeholder="请输入兴趣爱好" value={interests} onChange={this.inputInterests.bind(this)} /></div>
                             </Col>
@@ -290,8 +290,8 @@ export default class Enter extends React.Component {
                     </div>
                     <div className={styles.partItem}>
                         <Row>
-                            <Col span={9}><div className={styles.partItemDiv}>（选填）魅力部位（不超过3两项，多选则取前3项）：</div></Col>
-                            <Col span={15}>
+                            <Col span={8}><div className={styles.partItemDiv}>（选填）魅力部位（不超过3项，多选则取前3项）：</div></Col>
+                            <Col span={16}>
                                 <div className={styles.partItemDiv}>
                                     <CheckboxGroup options={glamourList} value={checkedglamourList} onChange={this.checkGlamourList.bind(this)} />
                                 </div>
@@ -325,6 +325,7 @@ export default class Enter extends React.Component {
                 <div className={styles.partItem}>
                     <Row>
                         <Col span={3}><div className={styles.partItemDiv}><span className={styles.partTopMust}>*</span>服务封面照：</div></Col>
+                        {fileList3.length >= 1 ?<Col span={2}><div className={styles.partItemDiv2}><img style={{width:100,height:100}} src={stationImg} alt="" /></div></Col>:""}
                         <Col span={4}>
                             <div className={styles.partItemDiv2}>
                                 <Upload
@@ -341,7 +342,6 @@ export default class Enter extends React.Component {
                                 </Modal>
                             </div>
                         </Col>
-                        {fileList.length >= 1 ?<Col span={2}><div className={styles.partItemDiv2}><img style={{width:100,height:100}} src={stationImg} alt="" /></div></Col>:""}
                         <Col span={12}>
                             <div className={styles.partItemDiv2}>
                                 <div style={{fontSize:'14px',lineHeight:'20px'}}> 

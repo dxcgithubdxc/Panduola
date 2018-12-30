@@ -104,7 +104,7 @@ export default class Home extends React.Component {
     }
     render() {
         const {bannerImgArr,homeHotRecommendArr,newShowArr,exampleHotArr,exampleGiftArr,exampleRichArr}=this.state;
-        console.log(exampleRichArr);
+        // console.log(exampleRichArr);
         return (<div >
             {/**Banner轮播图*/}
             <div className={styles.carouselContainer}>

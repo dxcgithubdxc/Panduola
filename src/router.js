@@ -30,6 +30,21 @@ function RouterConfig({ history, app }) {
         models: () => [import('./models/users')],
         component: () => import('./routes/Preference')
     })
+    const SelfDetails = dynamic({
+        app,
+        models: () => [import('./models/users')],
+        component: () => import('./routes/SelfDetails')
+    })
+    // const BussnissRecord = dynamic({
+    //     app,
+    //     models: () => [import('./models/users')],
+    //     component: () => import('./routes/BussnissRecord')
+    // })
+    // const SelfOrder = dynamic({
+    //     app,
+    //     models: () => [import('./models/users')],
+    //     component: () => import('./routes/SelfOrder')
+    // })
     return (
         <ConnectedRouter history={history}>
         {/*Layout以外是登录、404等其他页面的所有路由*/}
@@ -40,6 +55,10 @@ function RouterConfig({ history, app }) {
                     <Route path="/playlist" exact component={PlayList} />
                     <Route path="/enter" exact component={Enter} />
                     <Route path="/preference" exact component={Preference} />
+                    <Route path="/selfdetails" exact component={SelfDetails} />
+                    {/* <Route path="/bussnissrecord" exact component={BussnissRecord} />
+                    <Route path="/selforder" exact component={SelfOrder} /> */}
+                    
                     
                 </App>
             </Switch>

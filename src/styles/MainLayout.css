@@ -66,3 +66,10 @@
     color:#959595;
     font-size: 11px;
 }
+.loginDiv{
+    height:500px;
+}
+.loginItem{
+    height:50px;line-height: 32px;
+}
+.loginInput{width:200px;}

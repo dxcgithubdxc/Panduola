@@ -3,10 +3,8 @@ import { Layout, Menu, Icon, Modal } from 'antd';
 import { Link} from 'dva/router';
 import styles from '../styles/MainLayout2.css';
 import zb01 from '../assets/zb01.jpg';
-console.log(styles);
 const {Header, Content,Sider} = Layout;
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+const store=require('store');
 export default class MainLayout2 extends React.Component {
 	constructor(props) {
         super(props);
@@ -19,14 +17,23 @@ export default class MainLayout2 extends React.Component {
         console.log(this.props);
         var pathname=this.props.location.pathname;
         this.setState({defaultSelectedKeys:pathname});
-   
+        //根据userId查询头像、username
+        const userId=store.get("userId");
+            if(userId){
+            }
     }
     showModal(){
         Modal.confirm({
             title: '确定要退出登录吗？',
             content: '将会退出入驻系统',
+            okText:'确认',
+            cancelText:'取消',
             onOk() {
-                window.location.href=window.location.origin;
+                const userId=store.get("userId");
+                if(userId){
+                    store.remove("userId");
+                    window.location.href=window.location.origin;
+                }
             },
             onCancel() {},
           });
@@ -44,7 +51,7 @@ export default class MainLayout2 extends React.Component {
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={[defaultSelectedKeys]}>
                         <Menu.Item key="1"><Icon type="solution" /><span>我的订单</span></Menu.Item>
                         <Menu.Item key="2"><Icon type="file-done" /><span >交易记录</span></Menu.Item>
-                        <Menu.Item key="3"><Link to=""><Icon type="user" /> <span >个人资料</span></Link></Menu.Item>
+                        <Menu.Item key="/selfdetails"><Link to="/selfdetails"><Icon type="user" /> <span >个人资料</span></Link></Menu.Item>
                         <Menu.Item key="/enter"><Link to="/enter"><Icon type="user" /><span >我的导师资料</span></Link></Menu.Item>
                     </Menu>
                 </Sider>

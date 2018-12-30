@@ -1,0 +1,30 @@
+.container{
+    width:1120px;
+    margin:0  auto;
+}
+.pageTitle{
+    font-size: 30px;
+    font-weight: bold;
+    padding:20px 0;
+    border-bottom: black solid 1px;
+}
+.selfDetailsItem{
+    font-size: 20px;
+    padding:20px 0;
+}
+.selfDetailsImg{
+    width:100px;
+    height:100px;
+    border-radius: 50%;
+}
+.selfDetailsItemInput{
+    width:200px;
+}
+.submitButton{
+    display: inline-block;
+    margin: 0 auto;
+}
+.editSafeCenterItem{
+    height:50px;
+    line-height: 32px;
+}
