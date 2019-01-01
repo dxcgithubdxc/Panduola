@@ -1,19 +1,15 @@
-export var APIhost='https://www.baizhaowangluo.com/eshop';
-//export var APIhost=  'http://192.168.1.61';
+export var APIhost='http://www.pdlwan.com:5000';
+//export var APIhost=  'http://47.100.161.199:5000';
 export function ajax(options) {
                     options = options || {};
                     options.type = (options.type || "GET").toUpperCase();
                     options.dataType = options.dataType || "jsonp";
                     var params = formatParams(options.data);
                     var xhr;
-
-
                     //创建 - 第一步
                     if (window.XMLHttpRequest) {
                       xhr = new XMLHttpRequest();
                     } 
-
-
                     //连接 和 发送 - 第二步
                     if (options.type == "GET") {
                       xhr.open("GET", options.url + "?" + params, true);
@@ -24,8 +20,6 @@ export function ajax(options) {
                       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                       xhr.send(params);
                     }
-
-
                      //接收 - 第三步
                     xhr.onreadystatechange = function () {
                       if (xhr.readyState == 4) {
@@ -38,8 +32,6 @@ export function ajax(options) {
                       }
                     }
                   }
-
-
                   //格式化参数
  export function  formatParams(data) {
                     var arr = [];
@@ -77,3 +69,32 @@ export function ajax(options) {
   //     }
   //   });
   // }
+
+    //fetch GTE请求
+//   fetch(`${programHost.APIHost}`, {
+//     method: 'GET',
+//     dataType: 'json',
+//     headers: new Headers({
+//         Accept: 'application/json',
+//         'Content-Type': 'text/plain;charset=UTF-8',
+//     }),
+// }).then((res) => {
+//     res.json().then((data) => {
+//        console.log(data)
+//     });
+// });
+
+  //fetch POST请求
+//   fetch(`${programHost.APIHost}`, {
+//     method: 'POST',
+//     dataType: 'json',
+//     body: {},
+//     headers: new Headers({
+//         Accept: 'application/json',
+//         'Content-Type': 'text/plain;charset=UTF-8',
+//     }),
+// }).then((res) => {
+//     res.json().then((data) => {
+//        console.log(data)
+//     });
+// });

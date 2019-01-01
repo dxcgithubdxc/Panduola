@@ -1,5 +1,6 @@
 import React from 'react';
 import { Carousel,Row, Col } from 'antd';
+import *as programHost from '../utils/ajax';
 import styles from '../styles/Home.css';
 import banner1 from '../assets/banner1.jpg';
 import banner2 from '../assets/banner2.jpg';
@@ -20,6 +21,7 @@ import newShow4 from '../assets/newShow4.jpg';
 import newShow5 from '../assets/newShow5.jpg';
 import newShow6 from '../assets/newShow6.jpg';
 import example1 from '../assets/example1.jpg';
+const store=require('store');
 export default class Home extends React.Component {
 	constructor(props) {
         super(props);
@@ -34,16 +36,28 @@ export default class Home extends React.Component {
            
     }
     UNSAFE_componentWillMount(){
+        fetch(`${programHost.APIhost}/awardRecord/scrolling`, {
+            method: 'GET',
+            dataType: 'json',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'text/plain;charset=UTF-8',
+            }),
+        }).then((res) => {
+            res.json().then((data) => {
+            console.log(data)
+            });
+        });
         console.log(this.props);
         const homeHotRecommendArr=[
-            {title:'最强王者',supervisorName:'瞳瞳', palyItem:'英雄联盟', price:'200',tips:['激情四射','颜值担当'],image:zb01,},
-            {title:'超凡大师',supervisorName:'大司马', palyItem:'绝地求生', price:'1314',tips:['技术大师','逗比闲聊'],image:zb02,},
-            {title:'无畏青铜',supervisorName:'德云色', palyItem:'哄睡觉', price:'478',tips:['激情四射','颜值担当'],image:zb03,},
-            {title:'荣耀黄金',supervisorName:'PDD', palyItem:'虚拟恋人', price:'456',tips:['激情四射','颜值担当'],image:zb05,},
-            {title:'不屈白银',supervisorName:'卢本伟', palyItem:'刺激战场', price:'666',tips:['激情四射','颜值担当'],image:zb05,},
-            {title:'华贵白金',supervisorName:'周淑怡', palyItem:'配唱歌', price:'777',tips:['激情四射','颜值担当'],image:zb06,},
-            {title:'璀璨钻石',supervisorName:'骚男', palyItem:'无畏先锋', price:'999',tips:['激情四射','颜值担当'],image:zb07,},
-            {title:'英勇黑铁',supervisorName:'浪子彦', palyItem:'穿越火线', price:'1456',tips:['激情四射','颜值担当'],image:zb08,},
+            {title:'最强王者',supervisorName:'瞳瞳', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'200',tips:['激情四射','颜值担当'],image:zb01,MCPosition:'上海',sex:0},
+            {title:'超凡大师',supervisorName:'大司马', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'1314',tips:['技术大师','逗比闲聊'],image:zb02,MCPosition:'上海',sex:1},
+            {title:'无畏青铜',supervisorName:'德云色', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'478',tips:['激情四射','颜值担当'],image:zb03,MCPosition:'上海',sex:1},
+            {title:'荣耀黄金',supervisorName:'PDD', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'456',tips:['激情四射','颜值担当'],image:zb05,MCPosition:'上海',sex:1},
+            {title:'不屈白银',supervisorName:'卢本伟', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'666',tips:['激情四射','颜值担当'],image:zb05,MCPosition:'上海',sex:0},
+            {title:'华贵白金',supervisorName:'周淑怡', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'777',tips:['激情四射','颜值担当'],image:zb06,MCPosition:'上海',sex:0},
+            {title:'璀璨钻石',supervisorName:'骚男', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'999',tips:['激情四射','颜值担当'],image:zb07,MCPosition:'上海',sex:1},
+            {title:'英勇黑铁',supervisorName:'浪子彦', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'1456',tips:['激情四射','颜值担当'],image:zb08,MCPosition:'上海',sex:0},
         ];
         const newShowArr =[
              {newShowImage:newShow1,newShowName:'jiajia',newShowPosition:'上海',newShowSex:1,newShowAge:21,},
@@ -102,6 +116,11 @@ export default class Home extends React.Component {
     updateHomeHotRecommend(){
         console.log('换一批');
     }
+    toDetails(item){
+        const{history}=this.props;
+        history.push({pathname:'/mcdetails'});
+        store.set("mcdetail",item);
+    }
     render() {
         const {bannerImgArr,homeHotRecommendArr,newShowArr,exampleHotArr,exampleGiftArr,exampleRichArr}=this.state;
         // console.log(exampleRichArr);
@@ -125,7 +144,7 @@ export default class Home extends React.Component {
                 <Row gutter={20}>
                     {homeHotRecommendArr.map((item,index)=>{return(
                         <Col span={6} key={index} className={styles.homeHotRecommendCol}>
-                            <div className={styles.homeSupervisor}>
+                            <div className={styles.homeSupervisor} onClick={()=>{this.toDetails(item);}}>
                                 <div className={styles.homeSupervisorTitle}>{item.title}</div>
                                 <img className={styles.homeSupervisorImg} alt="" src={item.image} />
                                 <div className={styles.homeSupervisorText}>
@@ -135,7 +154,7 @@ export default class Home extends React.Component {
                                         <div className={styles.homeSupervisorTips2}>{item.tips[1]}</div>
                                     </div>
                                     <div className={styles.homeSupervisorTextBottom}>
-                                        <div className={styles.homeSupervisorItem}>{item.palyItem}</div>
+                                        <div className={styles.homeSupervisorItem}>{item.palyItem[0]}</div>
                                         <div className={styles.homeSupervisorPrice}><span style={{fontSize:'30px'}}>{item.price}</span>元/小时</div>
                                     </div>
                                 </div>

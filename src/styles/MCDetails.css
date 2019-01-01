@@ -1,0 +1,223 @@
+.container{
+    width:1120px;
+    margin:0  auto;
+}
+.MCDetailHeader{
+    width:1120px;
+    height:100px;
+    margin:20px 0;
+    padding:10px;
+    background: white;
+    border-radius: 50px;
+    overflow: hidden;
+}
+.MCDetailMsg{
+    height:80px;
+    float: left;
+    width:350px;
+    /* background: greenyellow; */
+    padding-left: 10px;
+}
+.MCDetailAvtor{
+    width:80px;
+    height:80px;
+    border-radius: 50%;
+    display: block;
+    float: left;
+}
+.MCDetailMsgContent{
+    width:250px;
+    float:left;
+    padding-left: 10px;
+    /* background: greenyellow; */
+
+}
+.MCDetailName{
+    font-weight: bold;
+    height:40px;
+}
+
+.MCDetailTitle{
+    height:40px;
+}
+.MCDetail2{
+    width:150px;
+    height:80px;
+    float:right;
+    /* background: greenyellow; */
+}
+.xiadan{height:40px;}
+.MCDetailPS{
+    height:40px;
+}
+.MCDetailImgs{
+    width:450px;
+    height:570px;
+    background: white;
+    margin-bottom: 20px;
+}
+.MCDetailImgBig{
+    width:450px;
+    height:450px;
+}
+.MCDetailImgSmallList{
+    width:450px;
+    padding:10px;
+}
+.MCDetailImgSmall{
+    width:90px;
+    height:90px;
+    cursor: pointer;
+}
+.MCDetailImgSmallCheck{
+    border:2px solid red;
+    width:90px;
+    height:90px;
+    cursor: pointer;
+}
+.sendGifts{
+    height:500px;
+    padding:0 10px;
+    background: white;
+    margin:20px 0;
+}
+.sendGiftsItem{
+    height:360px;
+}
+.giftDiv{
+    cursor: pointer;
+    border-radius: 2px;
+    width:100px;
+    height:90px;
+}
+.giftDivCheck{
+    cursor: pointer;
+    border-radius: 2px;
+    border:2px solid red;
+    width:100px;
+    height:90px;
+}
+.giftDiv:hover{
+    border:2px solid #ccc;
+}
+.giftImg{
+    width:60px;
+    height:60px;
+    margin-left:20px;
+}
+.giftName{
+    width:100px;
+    height:20px;
+    line-height:20px;
+    font-size: 12px;
+    text-align: center;
+}
+.inputGiftNum{
+    padding: 8px 0;
+    height:50px;
+    line-height: 32px;
+    border-top:1px solid #ccc;
+}
+.MCSelfMsg{
+    padding:20px 10px;
+    background: white;
+    margin-bottom: 20px;
+}
+.MCSelfMsgItem{
+    padding:10px 0;
+}
+.gotGifts{
+    padding:20px 10px;
+    background: white;
+    margin-bottom: 20px;
+}
+.gotGiftIem{
+    width:80px;
+    height:100px;
+    
+}
+.gotGiftIemImg{
+    width:80px;
+    height:80px;
+    cursor: pointer;
+}
+.gotGiftIemMun{
+    width:80px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    text-align: center;
+    /* color:white; */
+
+}
+.gameItem{
+    background: white;
+    padding:20px 10px;
+}
+/* .gameItemTitleMsg{
+    padding:20px 0;
+    
+} */
+.gameItemTitleMsg1{
+    /* width:100px; */
+    height:125px;
+}
+.gameItemTitleMsgImg{
+    width:100px;
+    height:100px;
+}
+.gameItemTitleAudio{
+    height:25px;
+    padding-top: 5px;
+}
+.gameItemTitleAudioContent{
+    height:20px;
+    width:100px;
+    background: green;
+    text-align: center;
+    border-radius: 10px;
+    color:white;
+    font-size: 14px;
+    cursor: pointer;
+}
+.gameItemTitleStation{
+    height:40px;
+    font-size: 32px;
+    font-weight: bold;
+}
+.gameItemTitleO{
+    height:30px;
+    line-height: 30px;
+}
+.gameItemTitlePrice{height:60px;}
+.gameIntroducetitle{
+    padding:0 10px;
+    background: white;
+    margin-top:20px;
+    height:60px;
+    line-height:60px;
+    border-top: 1px solid #ccc;
+}
+.gameIntroduceContent{
+    height:400px;
+   background: white;
+   padding:10px;
+}
+.gameIntroduceText{
+    width:626px;
+    height:50px;
+    line-height:50px; 
+    text-align: center;
+}
+.plactOrderFormItem{
+    height:50px;line-height:32px;
+}
+.plactOrderMsg{
+    height:50px;line-height:50px;
+    margin-bottom: 20px;
+}
+.oederImg{
+    width: 50px;
+    height:50px;
+    border-radius:50%;
+}

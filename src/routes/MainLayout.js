@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Layout, Menu, Icon ,Dropdown,Tabs, Modal, Button,Row, Col,Input,message, } from 'antd';
 import { Link} from 'dva/router';
+import *as programHost from '../utils/ajax';
 import styles from '../styles/MainLayout.css';
 import ewm1 from '../assets/ewm1.png';
 import consume1 from '../assets/consume1.jpg';
@@ -83,7 +84,7 @@ export default class MainLayout extends Component {
   }
   //登录
   Login(){
-    const{username}=this.state;
+    const{username,password}=this.state;
     console.log("login");
     //联网
     const content =this;
@@ -93,14 +94,43 @@ export default class MainLayout extends Component {
   }
   //注册 
   Register(){
-    const{username,phoneNumber,identityCode}=this.state;
+    const{username,password,phoneNumber,identityCode}=this.state;
     if(phoneNumber.length===0){message.warning('请填写手机号!!');return;}
     if(phoneNumber.length!==11){message.warning('手机号格式错误!!');return;}
     if(identityCode.length===0){message.warning('请填写验证码!!');return;}
-    console.log("Register");
-     //联网
-     store.set("userId","1");
-     message.success('注册成功!!');
+    const content =this;
+    const sbdata={
+      "mobile": phoneNumber,
+      "username": username,
+      "password": password,
+      "state": 1,
+      "VerificationCode": 123456,
+    };
+    console.log(sbdata);
+    console.log(JSON.stringify(sbdata));
+    fetch(`${programHost.APIhost}/user/register`, {
+      method: 'POST',
+      body:JSON.stringify(sbdata),
+      dataType: 'json',
+      headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+      }),
+    }).then((response) => {
+      response.json().then((res) => {
+          console.log(res);
+          console.log(store);
+          if(res.statusCode===101){
+            store.set("userId",res.resource._id);
+            content.emptyState();
+            message.success('注册成功!!');
+          }else{
+            message.warn(res.message);
+          }
+        },(data) => {
+        console.log(data)
+      });
+    });
   }
   //取消按钮
   handleCancel(){
@@ -144,7 +174,6 @@ export default class MainLayout extends Component {
             >
               <Menu.Item key="/home"><Link to="/home">主页</Link></Menu.Item>
               <Menu.Item key="/playlist"><Link to="/playlist">约陪玩</Link></Menu.Item>
-              <Menu.Item key="setting:3">约战队</Menu.Item>
               <Menu.Item key="/preference"><Link to="/preference">特惠专区</Link></Menu.Item>
               <Menu.Item key="setting:5">充值</Menu.Item>
                 <Dropdown key="setting:a" overlay={menu} placement="bottomLeft">
