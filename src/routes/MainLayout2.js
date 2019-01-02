@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Menu, Icon, Modal } from 'antd';
 import { Link} from 'dva/router';
+import *as programHost from '../utils/ajax';
 import styles from '../styles/MainLayout2.css';
 import zb01 from '../assets/zb01.jpg';
 const {Header, Content,Sider} = Layout;
@@ -11,15 +12,38 @@ export default class MainLayout2 extends React.Component {
         this.state={
             defaultSelectedKeys:"",
             atvator:zb01,
+            userInfo:{},
         }
   }
     UNSAFE_componentWillMount(){
         console.log(this.props);
         var pathname=this.props.location.pathname;
         this.setState({defaultSelectedKeys:pathname});
-        //根据userId查询头像、username
-        const userId=store.get("userId");
-            if(userId){
+        //根据userName查询头像、username
+        const userName=store.get("username");
+            if(userName){
+                const content =this;
+                //联网获取userinfo
+                return fetch(`${programHost.APIhost}/user/info`, {
+                method: 'GET',
+                mode: 'cors',
+                credentials: 'include',
+                headers: new Headers({
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    'Authorization':programHost.getAuth('/user/info'),// 除登录之外，获取登录的token都不需要username和password
+                }),
+                }).then((response) => {
+                console.log(response);
+                response.json().then((res) => {
+                    console.log(res);
+                    if(res.statusCode===107){
+                        content.setState({userInfo:res.resource});
+                    }
+                    },(data) => {
+                    console.log(data)
+                });
+                });
             }
     }
     showModal(){
@@ -29,9 +53,9 @@ export default class MainLayout2 extends React.Component {
             okText:'确认',
             cancelText:'取消',
             onOk() {
-                const userId=store.get("userId");
-                if(userId){
-                    store.remove("userId");
+                const userName=store.get("username");
+                if(userName){
+                    store.remove("username");
                     window.location.href=window.location.origin;
                 }
             },
@@ -41,7 +65,7 @@ export default class MainLayout2 extends React.Component {
     render() {
         
         const {children}=this.props;
-        const {defaultSelectedKeys,atvator}=this.state;
+        const {defaultSelectedKeys,atvator,userInfo}=this.state;
         return (<div style={{height:'100%'}}>
             <Layout style={{height:'100%'}}>
                 <Sider
@@ -62,8 +86,8 @@ export default class MainLayout2 extends React.Component {
                             mode="horizontal"
                         >
                             <Menu.Item key="userImg"><img src={atvator} alt="" style={{height:'50px',width:'50px',borderRadius:'50%'}} /></Menu.Item>
-                            <Menu.Item key="userName"><Icon type="user" /><span>绅士扮演者v</span></Menu.Item>
-                            <Menu.Item key="userId"><Icon type="idcard" /><span>UID:123123</span></Menu.Item>
+                            <Menu.Item key="username"><Icon type="user" /><span>{userInfo.username}</span></Menu.Item>
+                            <Menu.Item key="id"><Icon type="idcard" /><span>UID:{userInfo.userCode}</span></Menu.Item>
                             <Menu.Item key="logout" onClick={this.showModal.bind(this)}><Icon type="logout" /><span>退出登录</span></Menu.Item>
                         </Menu>
                     </Header>

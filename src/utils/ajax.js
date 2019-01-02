@@ -1,5 +1,17 @@
+
+var AES = require("crypto-js/aes");
+var HmacMD5 = require("crypto-js/hmac-md5");
+var store = require('store');
 export var APIhost='http://www.pdlwan.com:5000';
 //export var APIhost=  'http://47.100.161.199:5000';
+export function getAuth(url,username,password){
+  if(!password&&!store.get("username")){return null}
+  var pass =  AES.encrypt(url+":"+new Date().getTime(), password? HmacMD5(password,password).toString() : store.get("username").password);
+  return "bearer "+(username? username : store.get("username").username)+":"+pass;
+}
+export function cryptoPassword(pswd){
+  return HmacMD5(pswd,pswd).toString();
+}
 export function ajax(options) {
                     options = options || {};
                     options.type = (options.type || "GET").toUpperCase();

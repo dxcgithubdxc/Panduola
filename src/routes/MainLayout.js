@@ -44,8 +44,8 @@ export default class MainLayout extends Component {
     console.log(123);
   }
   Enter(){
-    const userId=store.get("userId");
-    if(!userId){this.setState({loginModalVisible:true});}
+    const userName=store.get("username");
+    if(!userName){this.setState({loginModalVisible:true});}
     else{
       window.location.href=`${window.location.origin}/enter`;
     }
@@ -85,12 +85,33 @@ export default class MainLayout extends Component {
   //登录
   Login(){
     const{username,password}=this.state;
-    console.log("login");
-    //联网
     const content =this;
-    content.emptyState();
-    store.set("userId","1");
-    message.success('登录成功!!');
+    //联网
+    return fetch(`${programHost.APIhost}/user/login`, {
+      method: 'GET',
+      // dataType: 'json',
+      mode: 'cors',
+      credentials: 'include',
+      headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization':programHost.getAuth('/user/login',username,password),// 获取登录的token
+      }),
+    }).then((response) => {
+      console.log(response);
+      response.json().then((res) => {
+          console.log(res);
+          if(res.statusCode===101){
+            store.set("username",{username:username,password:programHost.cryptoPassword(password)});// 本地存username和加密后的password
+            content.emptyState();
+            message.success(res.message);
+          }else{
+            message.warn(res.message);
+          }
+        },(data) => {
+        console.log(data)
+      });
+    });
   }
   //注册 
   Register(){
@@ -117,11 +138,12 @@ export default class MainLayout extends Component {
           'Content-Type': 'application/json;charset=UTF-8',
       }),
     }).then((response) => {
+      console.log(response);
       response.json().then((res) => {
           console.log(res);
           console.log(store);
           if(res.statusCode===101){
-            store.set("userId",res.resource._id);
+            store.set("username",{username:username,password:programHost.cryptoPassword(password)});// 本地存username和加密后的password
             content.emptyState();
             message.success('注册成功!!');
           }else{
@@ -164,7 +186,7 @@ export default class MainLayout extends Component {
       <Layout className="layout">
       {/**导航条 */}
         <div className={styles.headerBg}>
-          <Header style={{background:'#fff',width:'1420px'}}>
+          <Header style={{background:'#fff',width:'1420px', margin:' 0 auto'}}>
             <div className={styles.logo}/>
             <Menu
               theme="light"
@@ -181,7 +203,7 @@ export default class MainLayout extends Component {
                 </Dropdown>
               <Menu.Item key="/enter" onClick={()=>{this.Enter();}}><Icon type="flag" />申请入驻</Menu.Item>
               {
-                store.get("userId")?<Menu.Item key="setting:8"><Link to="/enter"><Icon type="team" />会员中心</Link></Menu.Item>:<Menu.Item key="setting:7" onClick={()=>{this.setState({loginModalVisible:true})}}><Icon type="user" />注册/登录</Menu.Item>
+                store.get("username")?<Menu.Item key="setting:8"><Link to="/enter"><Icon type="team" />会员中心</Link></Menu.Item>:<Menu.Item key="setting:7" onClick={()=>{this.setState({loginModalVisible:true})}}><Icon type="user" />注册/登录</Menu.Item>
                 }
               
             </Menu>
