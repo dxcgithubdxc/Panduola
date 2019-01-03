@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import styles from '../styles/Enter.css';
 import {Row,Col,Input,Radio,DatePicker,Checkbox,Upload,Modal,Button,Icon,Select} from 'antd';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
@@ -26,10 +27,10 @@ export default class Enter extends React.Component {
             weight:"",
             job:"请选择",
             interests:"",
-            glamourList:[],
-            checkedglamourList:[],
+            glamourList:[],// 所有魅力部位
+            checkedglamourList:[],// 选择的魅力部位
             fileList2:[],// 视频
-            serviceList:[],
+            serviceList:[],// 所有游戏服务 gameServiceStatus:0 未开通 1审核中 2已开通
             gameServiceNum:0,
             stationImg:"",// 段位封面图
             fileList3:[],// 段位封面图fileList
@@ -46,11 +47,11 @@ export default class Enter extends React.Component {
         const natureList=['特殊才艺','颜值担当','声音甜美','乖巧粘人','性感知心','激情四射',];
         const glamourList=["眼睛","鼻子","嘴巴","下巴","胸部","大腿","腰部","臀部","手","其他",];
         const serviceList=[
-            {title:'线上LOL',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_31540.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_31540.png',gameServiceNum:1,gameServiceStatus:0,},
+            {title:'线上LOL',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_31540.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_31540.png',gameServiceNum:1,gameServiceStatus:1,},
             {title:'绝地求生',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20014.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20014.png',gameServiceNum:2,gameServiceStatus:0,},
-            {title:'王者荣耀',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20008.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20008.png',gameServiceNum:3,gameServiceStatus:0,},
+            {title:'王者荣耀',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20008.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20008.png',gameServiceNum:3,gameServiceStatus:1,},
             {title:'刺激战场',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20018.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20018.png',gameServiceNum:4,gameServiceStatus:0,},
-            {title:'全军出击',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20019.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20019.png',gameServiceNum:5,gameServiceStatus:0,},
+            {title:'全军出击',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20019.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20019.png',gameServiceNum:5,gameServiceStatus:2,},
             {title:'荒野行动',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20016.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20016.png',gameServiceNum:6,gameServiceStatus:0,},
             {title:'第五人格',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20020.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20020.png',gameServiceNum:7,gameServiceStatus:0,},
             {title:'视频游戏',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20021.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20021.png',gameServiceNum:8,gameServiceStatus:0,},
@@ -61,15 +62,13 @@ export default class Enter extends React.Component {
             {title:'线上歌手',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20002.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20002.png',gameServiceNum:13,gameServiceStatus:0,},
             {title:'声音鉴定',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20021.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20021.png',gameServiceNum:14,gameServiceStatus:0,},
         ];
-        const GKSectionList=["倔强黄铜","秩序白银","荣耀黄金","尊贵铂金","永恒钻石","至尊星耀","最强王者","荣耀王者"]
-        this.setState({natureList,glamourList,serviceList});
+        const GKSectionList=["倔强黄铜","秩序白银","荣耀黄金","尊贵铂金","永恒钻石","至尊星耀","最强王者","荣耀王者"];
+        this.setState({natureList,glamourList,serviceList,});
     }
     //填写昵称
     inputNickName(e){ this.setState({nickName:e.target.value});}
     //选择性别
     changeSex(e){ this.setState({sex:e.target.value});}
-    //选择生日
-    changeBirthday(date, dateString) {this.setState({birthday:dateString})}
     //填写所在地
     inputLocation(e){ this.setState({location:e.target.value});}
     //填写手机号
@@ -106,7 +105,13 @@ export default class Enter extends React.Component {
     //选择魅力部位
     checkGlamourList(list){this.setState({checkedglamourList:list}); }
     //选择开通服务
-    selectGameServiceNum(item){this.setState({gameServiceNum:item.gameServiceNum});}
+    selectGameServiceNum(item){
+        if(item.gameServiceStatus === 0){
+
+            this.setState({gameServiceNum:item.gameServiceNum});
+        }
+        
+    }
     // 填写LOLID
     inputLOLID(e){ this.setState({LOLID:e.target.value});}
     //选择LOL大区
@@ -177,7 +182,7 @@ export default class Enter extends React.Component {
                     <div className={styles.partItem}>
                         <Row>
                             <Col span={4}><div className={styles.partItemDiv}><span className={styles.partTopMust}>*</span>出生日期：</div></Col>
-                            <Col span={20}><div className={styles.partItemDiv}><DatePicker locale={locale} placeholder="请选择日期" onChange={this.changeBirthday.bind(this)} /></div></Col>
+                            <Col span={20}><div className={styles.partItemDiv}><DatePicker locale={locale} placeholder="请选择日期"  defaultValue={moment('2019-01-01','YYYY-MM-DD')} format={'YYYY-MM-DD'} onChange={(date, dateString)=>{this.setState({birthday:dateString})}} /></div></Col>
                         </Row>
                     </div>
                     <div className={styles.partItem}>
@@ -313,7 +318,7 @@ export default class Enter extends React.Component {
                             {serviceList.map((item,index)=>{return(
                                 <Col span={4} key={index}>
                                     <div className={styles.serviceItem}>
-                                        <img className={styles.serviceItemImg} onClick={this.selectGameServiceNum.bind(this,item)} src={gameServiceNum===item.gameServiceNum?item.selectedImg:item.img}alt=""/>
+                                        <img className={styles.serviceItemImg} onClick={this.selectGameServiceNum.bind(this,item)} src={gameServiceNum===item.gameServiceNum||item.gameServiceStatus >= 1?item.selectedImg:item.img}alt=""/>
                                         <div className={styles.serviceItemName}>{item.title}</div>
                                         <div className={styles.serviceIteStatus} style={item.gameServiceStatus===0?{color:'#999999'}:item.gameServiceStatus===1?{color:'red'}:{color:'#1dd3b8'}}>{item.gameServiceStatus===0?"未开通":item.gameServiceStatus===1?"审核中":"已开通"}</div>
                                     </div>

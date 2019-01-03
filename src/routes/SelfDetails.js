@@ -1,7 +1,9 @@
 import React from 'react';
 import {Row,Col,Input,Radio,DatePicker,Checkbox,Upload,Modal,Button,Icon,Select} from 'antd';
 import zb01 from '../assets/zb01.jpg';
+import *as programHost from '../utils/ajax';
 import styles from '../styles/SelfDetails.css';
+const store=require('store');
 export default class SelfDetails extends React.Component {
 	constructor(props) {
         super(props);
@@ -9,6 +11,7 @@ export default class SelfDetails extends React.Component {
             previewVisible:false,
             editSafeCenterVisible:false,
             fileList:[],
+            userInfo:{},
             avtor:"",
             previewImg:"",
             nickName:"",
@@ -20,6 +23,32 @@ export default class SelfDetails extends React.Component {
         }
     }
     UNSAFE_componentWillMount(){
+        //根据userName查询头像、username
+        const userName=store.get("username");
+        if(userName){
+            const content =this;
+            //联网获取userinfo
+            return fetch(`${programHost.APIhost}/user/info`, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization':programHost.getAuth('/user/info'),// 除登录之外，获取登录的token都不需要username和password
+            }),
+            }).then((response) => {
+            console.log(response);
+            response.json().then((res) => {
+                console.log(res);
+                if(res.statusCode===107){
+                    content.setState({userInfo:res.resource});
+                }
+                },(data) => {
+                console.log(data)
+            });
+            });
+        }
        
     }
     //上传头像
@@ -53,7 +82,7 @@ export default class SelfDetails extends React.Component {
         })
     }
     render() {
-        const{fileList,previewVisible,previewImg,editSafeCenterVisible,nickName,QQNumber,phoneNumber,oldPassword,newPassword,newPassword2}=this.state;
+        const{userInfo,fileList,previewVisible,previewImg,editSafeCenterVisible,nickName,QQNumber,phoneNumber,oldPassword,newPassword,newPassword2}=this.state;
         return ( <div > 
             <div className={styles.container}>
             {/* 基本资料 */}
@@ -98,13 +127,13 @@ export default class SelfDetails extends React.Component {
                 <div className={styles.selfDetailsItem}>
                     <Row>
                         <Col span={4}>用户名：</Col>
-                        <Col span={20}>绅士扮演者</Col>
+                        <Col span={20}>{userInfo.username}</Col>
                     </Row>
                 </div>
                 <div className={styles.selfDetailsItem}>
                     <Row>
                         <Col span={4}>手机号：</Col>
-                        <Col span={20}>13678348925</Col>
+                        <Col span={20}>{userInfo.mobile}</Col>
                     </Row>
                 </div>
                 

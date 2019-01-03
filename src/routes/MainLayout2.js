@@ -21,30 +21,30 @@ export default class MainLayout2 extends React.Component {
         this.setState({defaultSelectedKeys:pathname});
         //根据userName查询头像、username
         const userName=store.get("username");
-            if(userName){
-                const content =this;
-                //联网获取userinfo
-                return fetch(`${programHost.APIhost}/user/info`, {
-                method: 'GET',
-                mode: 'cors',
-                credentials: 'include',
-                headers: new Headers({
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                    'Authorization':programHost.getAuth('/user/info'),// 除登录之外，获取登录的token都不需要username和password
-                }),
-                }).then((response) => {
-                console.log(response);
-                response.json().then((res) => {
-                    console.log(res);
-                    if(res.statusCode===107){
-                        content.setState({userInfo:res.resource});
-                    }
-                    },(data) => {
-                    console.log(data)
-                });
-                });
-            }
+        if(userName){
+            const content =this;
+            //联网获取userinfo
+            return fetch(`${programHost.APIhost}/user/info`, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization':programHost.getAuth('/user/info'),// 除登录之外，获取登录的token都不需要username和password
+            }),
+            }).then((response) => {
+            console.log(response);
+            response.json().then((res) => {
+                console.log(res);
+                if(res.statusCode===107){
+                    content.setState({userInfo:res.resource});
+                }
+                },(data) => {
+                console.log(data)
+            });
+            });
+        }
     }
     showModal(){
         Modal.confirm({
