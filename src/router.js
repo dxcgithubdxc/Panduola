@@ -40,6 +40,12 @@ function RouterConfig({ history, app }) {
         models: () => [import('./models/users')],
         component: () => import('./routes/MCDetails')
     })
+    const Recharge = dynamic({
+        app,
+        models: () => [import('./models/users')],
+        component: () => import('./routes/Recharge')
+    })
+    
     // const BussnissRecord = dynamic({
     //     app,
     //     models: () => [import('./models/users')],
@@ -62,6 +68,8 @@ function RouterConfig({ history, app }) {
                     <Route path="/preference" exact component={Preference} />
                     <Route path="/selfdetails" exact component={SelfDetails} />
                     <Route path="/mcdetails" exact component={MCDetails} />
+                    <Route path="/recharge" exact component={Recharge} />
+                    
                     {/* <Route path="/bussnissrecord" exact component={BussnissRecord} />
                     <Route path="/selforder" exact component={SelfOrder} /> */}
                     

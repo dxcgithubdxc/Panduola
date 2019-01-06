@@ -197,7 +197,7 @@ export default class MainLayout extends Component {
               <Menu.Item key="/home"><Link to="/home">主页</Link></Menu.Item>
               <Menu.Item key="/playlist"><Link to="/playlist">约陪玩</Link></Menu.Item>
               <Menu.Item key="/preference"><Link to="/preference">特惠专区</Link></Menu.Item>
-              <Menu.Item key="setting:5">充值</Menu.Item>
+              <Menu.Item key="/recharge"><Link to="/recharge">充值</Link></Menu.Item>
                 <Dropdown key="setting:a" overlay={menu} placement="bottomLeft">
                   <Button icon="download">APP下载</Button>
                 </Dropdown>

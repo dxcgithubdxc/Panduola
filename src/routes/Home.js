@@ -116,6 +116,7 @@ export default class Home extends React.Component {
     updateHomeHotRecommend(){
         console.log('换一批');
     }
+    //查看主播个人主页
     toDetails(item){
         const{history}=this.props;
         history.push({pathname:'/mcdetails'});

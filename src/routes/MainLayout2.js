@@ -77,6 +77,7 @@ export default class MainLayout2 extends React.Component {
                         <Menu.Item key="2"><Icon type="file-done" /><span >交易记录</span></Menu.Item>
                         <Menu.Item key="/selfdetails"><Link to="/selfdetails"><Icon type="user" /> <span >个人资料</span></Link></Menu.Item>
                         <Menu.Item key="/enter"><Link to="/enter"><Icon type="user" /><span >我的导师资料</span></Link></Menu.Item>
+                        <Menu.Item key="/home"><Link to="/home"><Icon type="poweroff" /><span >返回首页</span></Link></Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout>
@@ -86,8 +87,8 @@ export default class MainLayout2 extends React.Component {
                             mode="horizontal"
                         >
                             <Menu.Item key="userImg"><img src={atvator} alt="" style={{height:'50px',width:'50px',borderRadius:'50%'}} /></Menu.Item>
-                            <Menu.Item key="username"><Icon type="user" /><span>{userInfo.username}</span></Menu.Item>
-                            <Menu.Item key="id"><Icon type="idcard" /><span>UID:{userInfo.userCode}</span></Menu.Item>
+                            <Menu.Item key="username"><Icon type="idcard" /><span>{userInfo.username}</span></Menu.Item>
+                            <Menu.Item key="id"><Icon type="money-collect" /><span>钻石:{userInfo.diamonds}</span></Menu.Item>
                             <Menu.Item key="logout" onClick={this.showModal.bind(this)}><Icon type="logout" /><span>退出登录</span></Menu.Item>
                         </Menu>
                     </Header>

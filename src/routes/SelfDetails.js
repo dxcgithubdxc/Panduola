@@ -16,6 +16,7 @@ export default class SelfDetails extends React.Component {
             previewImg:"",
             nickName:"",
             QQNumber:"",
+            username:"",
             phoneNumber:"",
             oldPassword:"",
             newPassword:"",
@@ -42,7 +43,12 @@ export default class SelfDetails extends React.Component {
             response.json().then((res) => {
                 console.log(res);
                 if(res.statusCode===107){
-                    content.setState({userInfo:res.resource});
+                    content.setState({
+                        nickName:res.resource.nickname,
+                        QQNumber:res.resource.qq,
+                        username:res.resource.username,
+                        phoneNumber:res.resource.mobile,
+                    });
                 }
                 },(data) => {
                 console.log(data)
@@ -82,7 +88,7 @@ export default class SelfDetails extends React.Component {
         })
     }
     render() {
-        const{userInfo,fileList,previewVisible,previewImg,editSafeCenterVisible,nickName,QQNumber,phoneNumber,oldPassword,newPassword,newPassword2}=this.state;
+        const{userInfo,fileList,previewVisible,previewImg,editSafeCenterVisible,nickName,QQNumber,username,phoneNumber,oldPassword,newPassword,newPassword2}=this.state;
         return ( <div > 
             <div className={styles.container}>
             {/* 基本资料 */}
@@ -127,13 +133,13 @@ export default class SelfDetails extends React.Component {
                 <div className={styles.selfDetailsItem}>
                     <Row>
                         <Col span={4}>用户名：</Col>
-                        <Col span={20}>{userInfo.username}</Col>
+                        <Col span={20}>{username}</Col>
                     </Row>
                 </div>
                 <div className={styles.selfDetailsItem}>
                     <Row>
                         <Col span={4}>手机号：</Col>
-                        <Col span={20}>{userInfo.mobile}</Col>
+                        <Col span={20}>{phoneNumber}</Col>
                     </Row>
                 </div>
                 

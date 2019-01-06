@@ -1,24 +1,32 @@
 import React from 'react';
 import moment from 'moment';
+import arrayTreeFilter from 'array-tree-filter';
+import {Row,Col,Input,Radio,DatePicker,Checkbox,Upload,Modal,Button,Icon,Select,message,Cascader} from 'antd';
 import styles from '../styles/Enter.css';
-import {Row,Col,Input,Radio,DatePicker,Checkbox,Upload,Modal,Button,Icon,Select} from 'antd';
+import *as programHost from '../utils/ajax';
+import *as cityData from '../utils/ssx';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 const {Option}=Select;
+const store=require('store');
+console.log(cityData);
+let options = cityData.globalData;
 export default class Enter extends React.Component {
 	constructor(props) {
         super(props);
         this.state={
             nickName:'',
             sex:1,
-            birthday:"",
-            location:"",
+            birthday:"2019-01-01",
+            province:'',
+            city:'',
+            pickerValue:[],
             phoneNumber:"",
             QQNumber:"",
             natureList:[],
             checkedNatureList:[],
-            natureSign:"",
+            natureSign:"",// 个性标签
             APPTopImg:"",// APP首页封面图
             fileList:[],// APP首页封面图fileList
             previewVisible:false,// APP首页封面预览图是否可见
@@ -32,13 +40,14 @@ export default class Enter extends React.Component {
             fileList2:[],// 视频
             serviceList:[],// 所有游戏服务 gameServiceStatus:0 未开通 1审核中 2已开通
             gameServiceNum:0,
+            gameServiceNumArr:[],
             stationImg:"",// 段位封面图
             fileList3:[],// 段位封面图fileList
             previewVisible3:false,// 段位预览图是否可见
             previewImg3:"",// 段位预览图
             LOLID:"",//LOL大区
             LOLArea:"请选择",//LOL大区
-            LOLSection:"无段位",//LOL段位
+            LOLSection:"请选择",//LOL段位
             GKSection:"",//王者段位
         }
     }
@@ -46,31 +55,97 @@ export default class Enter extends React.Component {
         console.log(this.props);
         const natureList=['特殊才艺','颜值担当','声音甜美','乖巧粘人','性感知心','激情四射',];
         const glamourList=["眼睛","鼻子","嘴巴","下巴","胸部","大腿","腰部","臀部","手","其他",];
-        const serviceList=[
-            {title:'线上LOL',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_31540.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_31540.png',gameServiceNum:1,gameServiceStatus:1,},
+        let serviceList=[
+            {title:'线上LOL',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_31540.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_31540.png',gameServiceNum:1,gameServiceStatus:0,},
             {title:'绝地求生',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20014.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20014.png',gameServiceNum:2,gameServiceStatus:0,},
-            {title:'王者荣耀',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20008.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20008.png',gameServiceNum:3,gameServiceStatus:1,},
+            {title:'王者荣耀',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20008.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20008.png',gameServiceNum:3,gameServiceStatus:0,},
             {title:'刺激战场',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20018.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20018.png',gameServiceNum:4,gameServiceStatus:0,},
-            {title:'全军出击',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20019.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20019.png',gameServiceNum:5,gameServiceStatus:2,},
+            {title:'全军出击',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20019.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20019.png',gameServiceNum:5,gameServiceStatus:0,},
             {title:'荒野行动',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20016.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20016.png',gameServiceNum:6,gameServiceStatus:0,},
             {title:'第五人格',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20020.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20020.png',gameServiceNum:7,gameServiceStatus:0,},
             {title:'视频游戏',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20021.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20021.png',gameServiceNum:8,gameServiceStatus:0,},
             {title:'声优聊天',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20004.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20004.png',gameServiceNum:9,gameServiceStatus:0,},
-            {title:'哄睡觉'  ,img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20012.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20012.png',gameServiceNum:10,gameServiceStatus:0,},
-            {title:'叫醒'   ,img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20013.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20013.png',gameServiceNum:11,gameServiceStatus:0,},
+            {title:'哄睡觉' ,img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20012.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20012.png',gameServiceNum:10,gameServiceStatus:0,},
+            {title:'叫醒' ,img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20013.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20013.png',gameServiceNum:11,gameServiceStatus:0,},
             {title:'虚拟恋人',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20011.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20011.png',gameServiceNum:12,gameServiceStatus:0,},
             {title:'线上歌手',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20002.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20002.png',gameServiceNum:13,gameServiceStatus:0,},
-            {title:'声音鉴定',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20021.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20021.png',gameServiceNum:14,gameServiceStatus:0,},
+            {title:'声音鉴定',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20021.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20021.png',gameServiceNum:14,gameServiceStatus:0,}
         ];
-        const GKSectionList=["倔强黄铜","秩序白银","荣耀黄金","尊贵铂金","永恒钻石","至尊星耀","最强王者","荣耀王者"];
-        this.setState({natureList,glamourList,serviceList,});
+        const userName=store.get("username");
+        if(userName){
+            const content =this;
+            //联网获取userinfo
+            return fetch(`${programHost.APIhost}/user/apply/info`, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization':programHost.getAuth('/user/apply/info'),// 除登录之外，获取登录的token都不需要username和password
+            }),
+            }).then((response) => {
+            response.json().then((res) => {
+                console.log(res);
+                // const{levels}=res.resuorce;
+                console.log("@@@@@@@@@@@@@@@@@@@@",res.resource.levels);
+                let gameServiceNumArr=[];
+                if(res.statusCode===107){
+                    res.resource.serviceList.forEach((item,index)=>{ if(item.gameServiceStatus ===1){gameServiceNumArr.push(item.gameServiceNum);}});
+                    content.setState({
+                        gameServiceNumArr,
+                        natureList,
+                        glamourList,
+                        serviceList:res.resource.serviceList,
+                        QQNumber:res.resource.QQ,
+                        birthday:res.resource.birthday,
+                        checkedglamourList:res.resource.charmPosition,
+                        city:res.resource.city,
+                        pickerValue:res.resource.cityCode,
+                        stature:res.resource.height,
+                        natureSign:res.resource.autograph,
+                        interests:res.resource.interest,
+                        checkedNatureList:res.resource.labels,
+                        phoneNumber:res.resource.mobile,
+                        nickName:res.resource.nickname,
+                        job:res.resource.occupation,
+                        province:res.resource.province,
+                        LOLID:gameServiceNumArr.indexOf(1)>=0?res.resource.service_gameId:"",
+                        LOLArea:gameServiceNumArr.indexOf(1)>=0?res.resource.service_gameQv:"",
+                        LOLSection:gameServiceNumArr.indexOf(1)>=0?res.resource.service_gameLevel:"",
+                        sex:res.resource.sex,
+                        weight:res.resource.weight,
+                        GKSection:gameServiceNumArr.indexOf(3)>=0?res.resource.levels:"",
+                    });
+                }
+                else{
+                    content.setState({gameServiceNumArr,serviceList,natureList,glamourList });
+                }
+                console.log(gameServiceNumArr);
+                },(data) => {
+                console.log(data)
+            });
+            });
+        }
+
     }
     //填写昵称
     inputNickName(e){ this.setState({nickName:e.target.value});}
     //选择性别
     changeSex(e){ this.setState({sex:e.target.value});}
-    //填写所在地
-    inputLocation(e){ this.setState({location:e.target.value});}
+    //选择所在地
+    onChangeAct (value){
+        console.log(value);
+        const data = this.state.pickerValue;
+        if (!data) {
+          return '';
+        }
+        const treeChildren = arrayTreeFilter(cityData.globalData, (c, level) => c.value === value[level]);
+        console.log(treeChildren);
+        // console.log(treeChildren.map(v => v.label).join(','));
+        this.setState({pickerValue: value, province: treeChildren[0].label,city:treeChildren[1].label});
+        // return treeChildren.map(v => v.label).join(',');
+      }
     //填写手机号
     inputPhoneNumber(e){ this.setState({phoneNumber:e.target.value});}
     //填写QQ号
@@ -106,11 +181,12 @@ export default class Enter extends React.Component {
     checkGlamourList(list){this.setState({checkedglamourList:list}); }
     //选择开通服务
     selectGameServiceNum(item){
+        console.log(item)
         if(item.gameServiceStatus === 0){
-
             this.setState({gameServiceNum:item.gameServiceNum});
         }
-        
+        // 如果选择了LOL（gameServiceStatus===1），那么要传相应的游戏ID、游戏大区，游戏段位，String
+        // 如果选择了王者（gameServiceStatus===3），那么要传相应的游戏段位，String
     }
     // 填写LOLID
     inputLOLID(e){ this.setState({LOLID:e.target.value});}
@@ -122,13 +198,165 @@ export default class Enter extends React.Component {
     changeGKSection(e){ this.setState({GKSection:e.target.value});}
     //提交表单数据
     onSubmit(){
-        console.log(123123);
+        const {
+            nickName,
+            sex,
+            province,
+            city,
+            pickerValue,
+            birthday,
+            phoneNumber,
+            QQNumber,
+            natureList,
+            checkedNatureList,//个性标签
+            natureSign,
+            fileList,
+            APPTopImg,
+            previewVisible,
+            previewImg,
+            stature,
+            weight,
+            job,
+            interests,
+            glamourList,
+            checkedglamourList,//魅力部位
+            fileList2,
+            serviceList,
+            gameServiceNum,
+            gameServiceNumArr,// 已经开通的游戏
+            stationImg,// 段位封面图
+            LOLID,//LOLID
+            LOLArea,//LOL大区
+            LOLSection,//LOL段位
+            GKSection,//王者段位
+        }=this.state;
+        if(nickName===""||pickerValue.length===0||phoneNumber===""||birthday===""||QQNumber===""||natureSign===""){message.warn('请完善您的基本信息！！');return;}
+        if(checkedNatureList.length!==2){message.warn('个性标签请选择两项！！');return;}
+        if(checkedglamourList.length>0&checkedglamourList.length!==3){message.warn('魅力部位请选择3项！！');return;}
+        let sbdata={}
+            
+            if(gameServiceNum===1){//如果选择了LOL
+                if(LOLID==="" ||LOLArea===""||LOLSection===""){message.warn('请完善您的LOL信息！！');return;}
+                sbdata={
+                    "headerImg": "string",
+                    "nickname": nickName,
+                    "sex": sex,
+                    "birthday":birthday,
+                    province:province,
+                    city:city,
+                    "cityCode":pickerValue,
+                    "mobile": phoneNumber,
+                    "QQ": QQNumber,
+                    "labels": checkedNatureList,//个性标签
+                    "autograph": natureSign,//个性签名
+                    "cover": "string",//APP封面图
+                    "height": Number(stature),
+                    "weight": Number(weight),
+                    "occupation": job,
+                    "interest": interests,
+                    "charmPosition": checkedglamourList,
+                    "videoId": "string",//视频
+                    "gameServiceNum": gameServiceNum,//开通服务的编号
+                    "serverCover": "string",//待审核的服务封面照
+                    "serverInfo": "string",//服务描述
+                    "service_gameId": LOLID,
+                    "service_gameQv": LOLArea,
+                    "service_gameLevel": LOLSection,
+                    "voiceId": "string",//语音介绍
+                    "state": 1
+                }
+            } else if(gameServiceNum===3){
+                sbdata={
+                    "headerImg": "string",
+                    "nickname": nickName,
+                    "sex": sex,
+                    "birthday":birthday,
+                    province:province,
+                    city:city,
+                    "cityCode":pickerValue,
+                    "mobile": phoneNumber,
+                    "QQ": QQNumber,
+                    "labels": checkedNatureList,//个性标签
+                    "autograph": natureSign,//个性签名
+                    "cover": "string",//APP封面图
+                    "height": Number(stature),
+                    "weight": Number(weight),
+                    "occupation": job,
+                    "interest": interests,
+                    "charmPosition": checkedglamourList,
+                    "videoId": "string",//视频
+                    "gameServiceNum": gameServiceNum,//开通服务的编号
+                    "serverCover": "string",//待审核的服务封面照
+                    "serverInfo": "string",//服务描述
+                    levels:GKSection,
+                    "voiceId": "string",//语音介绍
+                    "state": 1
+                }
+            }else{
+                sbdata={
+                    "headerImg": "string",
+                    "nickname": nickName,
+                    "sex": sex,
+                    "birthday":birthday,
+                    province:province,
+                    city:city,
+                    "cityCode":pickerValue,
+                    "mobile": phoneNumber,
+                    "QQ": QQNumber,
+                    "labels": checkedNatureList,//个性标签
+                    "autograph": natureSign,//个性签名
+                    "cover": "string",//APP封面图
+                    "height": Number(stature),
+                    "weight": Number(weight),
+                    "occupation": job,
+                    "interest": interests,
+                    "charmPosition": checkedglamourList,
+                    "videoId": "string",//视频
+                    "gameServiceNum": gameServiceNum,//开通服务的编号
+                    "serverCover": "string",//待审核的服务封面照
+                    "serverInfo": "string",//服务描述
+                    "voiceId": "string",//语音介绍
+                    "state": 1
+                }
+            }
+      
+          console.log(sbdata);
+          console.log(programHost.getAuth('/user/apply/tutor'));
+          const content =this;
+    //联网
+    return fetch(`${programHost.APIhost}/user/apply/tutor`, {
+      method: 'POST',
+      dataType: 'json',
+      body:JSON.stringify(sbdata),
+      mode: 'cors',
+      credentials: 'include',
+      headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization':programHost.getAuth('/user/apply/tutor'),// 获取token
+      }),
+    }).then((response) => {
+      console.log(response);
+      response.json().then((res) => {
+          console.log(res);
+          if(res.statusCode===107){
+              message.success(res.message);
+              content.UNSAFE_componentWillMount();
+          }else{message.warn(res.message)}
+        },(data) => {
+        console.log(data)
+      });
+    });
+
     }
     render() {
         const{
             nickName,
             sex,
-            location,
+            province,
+            city,
+            cityCode,
+            birthday,
             phoneNumber,
             QQNumber,
             natureList,
@@ -146,6 +374,7 @@ export default class Enter extends React.Component {
             fileList2,
             serviceList,
             gameServiceNum,
+            gameServiceNumArr,// 已经开通的游戏
             stationImg,// 段位封面图
             fileList3,// 段位封面图fileList
             previewVisible3,// 段位预览图是否可见
@@ -182,13 +411,15 @@ export default class Enter extends React.Component {
                     <div className={styles.partItem}>
                         <Row>
                             <Col span={4}><div className={styles.partItemDiv}><span className={styles.partTopMust}>*</span>出生日期：</div></Col>
-                            <Col span={20}><div className={styles.partItemDiv}><DatePicker locale={locale} placeholder="请选择日期"  defaultValue={moment('2019-01-01','YYYY-MM-DD')} format={'YYYY-MM-DD'} onChange={(date, dateString)=>{this.setState({birthday:dateString})}} /></div></Col>
+                            <Col span={20}><div className={styles.partItemDiv}><DatePicker locale={locale} placeholder="请选择日期"  defaultValue={moment(birthday,'YYYY-MM-DD')} format={'YYYY-MM-DD'} onChange={(date, dateString)=>{this.setState({birthday:dateString})}} /></div></Col>
                         </Row>
                     </div>
                     <div className={styles.partItem}>
                         <Row>
                             <Col span={4}><div className={styles.partItemDiv}><span className={styles.partTopMust}>*</span>所在地（省市）：</div></Col>
-                            <Col span={20}><div className={styles.partItemDiv}><Input placeholder="例：河南省郑州市" className={styles.partItemInput} value={location} onChange={this.inputLocation.bind(this)} /></div></Col>
+                            <Col span={20}>
+                                <div className={styles.partItemDiv}><Cascader style={{width:200}} value={this.state.pickerValue} options={options} onChange={(value)=>{this.onChangeAct(value)}} placeholder="请选择区域" /></div>
+                            </Col>
                         </Row>
                     </div>
                     <div className={styles.partItem}>
@@ -277,7 +508,7 @@ export default class Enter extends React.Component {
                             <Col span={4}><div className={styles.partItemDiv}>（选填）职业：</div></Col>
                             <Col span={20}>
                                 <div className={styles.partItemDiv}>
-                                <Select defaultValue={job} className={styles.partItemInput} onChange={this.selectJob.bind(this)}>
+                                <Select defaultValue={job} value={job} className={styles.partItemInput} onChange={this.selectJob.bind(this)}>
                                     <Option value="学生">学生</Option>
                                     <Option value="上班族">上班族</Option>
                                     <Option value="主播">主播</Option>
@@ -372,7 +603,7 @@ export default class Enter extends React.Component {
                     </Row>
                 </div>
                 {/* LOL必要条件 */}
-                <div style={gameServiceNum===1?{display:'block'}:{display:'none'}}>
+                <div style={gameServiceNum===1||gameServiceNumArr.indexOf(1)>=0?{display:'block'}:{display:'none'}}>
                     <div className={styles.partItem}>
                         <Row>
                             <Col span={4}><div className={styles.partItemDiv}><span className={styles.partTopMust}>*</span>游戏ID：</div></Col>
@@ -387,7 +618,7 @@ export default class Enter extends React.Component {
                             <Col span={4}><div className={styles.partItemDiv}><span className={styles.partTopMust}>*</span>所在大区：</div></Col>
                             <Col span={20}>
                                 <div className={styles.partItemDiv}>
-                                <Select defaultValue={LOLArea} className={styles.partItemInput} onChange={this.selectLOLArea.bind(this)}>
+                                <Select value={LOLArea} className={styles.partItemInput} onChange={this.selectLOLArea.bind(this)}>
                                     <Option value="艾欧尼亚">艾欧尼亚</Option>
                                     <Option value="祖安">祖安</Option>
                                     <Option value="诺克萨斯">诺克萨斯</Option>
@@ -425,7 +656,7 @@ export default class Enter extends React.Component {
                             <Col span={4}><div className={styles.partItemDiv}><span className={styles.partTopMust}>*</span>游戏段位：</div></Col>
                             <Col span={20}>
                                 <div className={styles.partItemDiv}>
-                                <Select defaultValue={LOLSection} className={styles.partItemInput} onChange={this.selectLOLSection.bind(this)}>
+                                <Select value={LOLSection} className={styles.partItemInput} onChange={this.selectLOLSection.bind(this)}>
                                     <Option value="最强王者">最强王者</Option>
                                     <Option value="超凡大师">超凡大师</Option>
                                     <Option value="诺克萨斯">诺克萨斯</Option>
@@ -435,7 +666,7 @@ export default class Enter extends React.Component {
                                     <Option value="璀璨钻石IV">璀璨钻石IV</Option>
                                     <Option value="璀璨钻石V">璀璨钻石V</Option>
                                     <Option value="华贵铂金I">华贵铂金I</Option>
-                                    <Option value="华贵铂金I">华贵铂金II</Option>
+                                    <Option value="华贵铂金II">华贵铂金II</Option>
                                     <Option value="华贵铂金III">华贵铂金III</Option>
                                     <Option value="华贵铂金IV">华贵铂金IV</Option>
                                     <Option value="华贵铂金V">华贵铂金V</Option>
@@ -461,7 +692,7 @@ export default class Enter extends React.Component {
                     </div>
                 </div>
                 {/* 王者必要条件 */}
-                <div style={gameServiceNum===3?{display:'block'}:{display:'none'}}>
+                <div style={gameServiceNum===3||gameServiceNumArr.indexOf(3)>=0?{display:'block'}:{display:'none'}}>
                 <div className={styles.partItem}>
                         <Row>
                             <Col span={4}><div className={styles.partItemDiv}>（选填）游戏段位：</div></Col>
