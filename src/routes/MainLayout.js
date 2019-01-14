@@ -3,7 +3,7 @@ import { Layout, Menu, Icon ,Dropdown,Tabs, Modal, Button,Row, Col,Input,message
 import { Link} from 'dva/router';
 import *as programHost from '../utils/ajax';
 import styles from '../styles/MainLayout.css';
-import ewm1 from '../assets/ewm1.png';
+import ewm1 from '../assets/ewm1.jpg';
 import consume1 from '../assets/consume1.jpg';
 import consume2 from '../assets/consume2.jpg';
 import consume3 from '../assets/consume3.jpg';
@@ -45,13 +45,19 @@ export default class MainLayout extends Component {
   }
   Enter(){
     const userName=store.get("username");
-    if(!userName){this.setState({loginModalVisible:true});}
+    console.log("@@@@@@",userName);
+    if(!userName){this.setState({loginModalVisible:true});return;}
     else{
       window.location.href=`${window.location.origin}/enter`;
     }
   }
   //获取验证码
   getIdentityCode(){
+    const {phoneNumber}=this.state;
+    if(phoneNumber.length!==11){
+      message.warn('手机号格式错误！！');
+      return;
+    }
     const content = this;
     let dumiaoNum =60;
     // this.Dumiao();
@@ -72,8 +78,30 @@ export default class MainLayout extends Component {
         clearInterval(myInterval);
       }
     },1000);
+    const sbdata ={mobile:phoneNumber};
     //联网，获取验证码
-
+    return fetch(`${programHost.APIhost}/sms/reg`, {
+      method: 'POST',
+      dataType: 'json',
+      body:JSON.stringify(sbdata),
+      mode: 'cors',
+      credentials: 'include',
+      headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Authorization':programHost.getAuth('/sms/reg'),// 获取登录的token
+      }),
+    }).then((response) => {
+      console.log(response);
+      response.json().then((res) => {
+          console.log(res);
+          if(res.statusCode===101){  message.success(res.message);}
+          else{message.warn(res.message);}
+          clearInterval(myInterval);
+        },(data) => {
+        console.log(data)
+      });
+    });
   }
   //确认按钮
   handleOk(){
@@ -125,7 +153,7 @@ export default class MainLayout extends Component {
       "username": username,
       "password": password,
       "state": 1,
-      "VerificationCode": 123456,
+      "VerificationCode": identityCode,
     };
     console.log(sbdata);
     console.log(JSON.stringify(sbdata));
@@ -180,7 +208,7 @@ export default class MainLayout extends Component {
     const{defaultSelectedKeys,loginModalVisible,phoneNumber,username,password,identityCode,loginType,dumiaoText,dumiao}=this.state;
     const menu=(<div className={styles.downloadAPP} onClick={this.downloadAPP.bind(this)}>
       <img className={styles.appImg} alt="" src={ewm1}/>
-      <div className={styles.appText}>扫码下载APP</div>
+      <div className={styles.appText}>扫描关注微信公众号</div>
       </div>);
     return (<div>
       <Layout className="layout">
@@ -199,7 +227,7 @@ export default class MainLayout extends Component {
               <Menu.Item key="/preference"><Link to="/preference">特惠专区</Link></Menu.Item>
               <Menu.Item key="/recharge"><Link to="/recharge">充值</Link></Menu.Item>
                 <Dropdown key="setting:a" overlay={menu} placement="bottomLeft">
-                  <Button icon="download">APP下载</Button>
+                  <Button>微信公众号</Button>
                 </Dropdown>
               <Menu.Item key="/enter" onClick={()=>{this.Enter();}}><Icon type="flag" />申请入驻</Menu.Item>
               {
@@ -223,12 +251,12 @@ export default class MainLayout extends Component {
             <Row>
               <Col span={8}>
                 <div className={styles.footerSecond}>
-                    <i className={styles.footerIcon1}></i>客服电话：010-68608228咨询时间：7X24小时
+                    <i className={styles.footerIcon1}></i>客服电话：13339119422&nbsp;&nbsp;咨询时间：7X24小时
                 </div>
               </Col>
               <Col span={8}>
                 <div className={styles.footerSecond}>
-                    <i className={styles.footerIcon2}></i>客服QQ：800184580咨询时间：7X24小时
+                    <i className={styles.footerIcon2}></i>客服QQ：800184580&nbsp;&nbsp;咨询时间：7X24小时
                 </div>
               </Col>
               <Col span={8}>
@@ -241,7 +269,7 @@ export default class MainLayout extends Component {
                 </div>
               </Col>
             </Row>
-            <div className={styles.copyRight}>(京)字第05536号Copyright 2014-2020 TUWAN Corporation,All Rights Reserved</div>
+            <div className={styles.copyRight}>皖ICP备18021779号&nbsp;Copyright 2019PDLWAN.COM Corporation,All Rights Reserved</div>
           </Footer>
         </div>
       </Layout>

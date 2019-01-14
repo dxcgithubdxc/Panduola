@@ -13,14 +13,14 @@ export default class SelfDetails extends React.Component {
             fileList:[],
             userInfo:{},
             avtor:"",
-            previewImg:"",
-            nickName:"",
-            QQNumber:"",
+            previewImg:"",// 头像
+            nickName:"",// 昵称
+            QQNumber:"",// QQ
             username:"",
-            phoneNumber:"",
-            oldPassword:"",
-            newPassword:"",
-            newPassword2:"",
+            phoneNumber:"",// 电话
+            oldPassword:"",// 原密码
+            newPassword:"",// 新密码
+            newPassword2:"",// 确认新密码
         }
     }
     UNSAFE_componentWillMount(){

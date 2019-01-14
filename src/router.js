@@ -46,16 +46,23 @@ function RouterConfig({ history, app }) {
         component: () => import('./routes/Recharge')
     })
     
-    // const BussnissRecord = dynamic({
-    //     app,
-    //     models: () => [import('./models/users')],
-    //     component: () => import('./routes/BussnissRecord')
-    // })
-    // const SelfOrder = dynamic({
-    //     app,
-    //     models: () => [import('./models/users')],
-    //     component: () => import('./routes/SelfOrder')
-    // })
+    const BussnissRecord = dynamic({
+        app,
+        models: () => [import('./models/users')],
+        component: () => import('./routes/BussnissRecord')
+    })
+    const MyOrders = dynamic({
+        app,
+        models: () => [import('./models/users')],
+        component: () => import('./routes/MyOrders')
+    })
+    const MyPrice = dynamic({
+        app,
+        models: () => [import('./models/users')],
+        component: () => import('./routes/MyPrice')
+    })
+
+    
     return (
         <ConnectedRouter history={history}>
         {/*Layout以外是登录、404等其他页面的所有路由*/}
@@ -69,10 +76,9 @@ function RouterConfig({ history, app }) {
                     <Route path="/selfdetails" exact component={SelfDetails} />
                     <Route path="/mcdetails" exact component={MCDetails} />
                     <Route path="/recharge" exact component={Recharge} />
-                    
-                    {/* <Route path="/bussnissrecord" exact component={BussnissRecord} />
-                    <Route path="/selforder" exact component={SelfOrder} /> */}
-                    
+                    <Route path="/bussnissrecord" exact component={BussnissRecord} />
+                    <Route path="/myorders" exact component={MyOrders} />
+                    <Route path="/myprice" exact component={MyPrice} />
                     
                 </App>
             </Switch>

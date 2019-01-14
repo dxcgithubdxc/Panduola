@@ -4,7 +4,7 @@ import locale from 'antd/lib/date-picker/locale/zh_CN';
 import { Row, Col, Icon, Modal,Input,InputNumber,Popover,DatePicker, Button,Tabs } from 'antd';
 import styles from '../styles/MCDetails.css';
 import zb01 from '../assets/zb01.jpg';
-import ewm1 from '../assets/ewm1.png';
+import ewm1 from '../assets/ewm1.jpg';
 const store=require('store');
 const TabPane = Tabs.TabPane;
 export default class MCDetails extends React.Component {

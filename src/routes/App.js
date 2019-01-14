@@ -21,7 +21,7 @@ let lastHref;
                 lastHref = href
             }
         }
-        return location.pathname==='/enter'||location.pathname==='/selfdetails'||location.pathname==='/bussnissrecord'||location.pathname==='/selforder'?
+        return location.pathname==='/enter'||location.pathname==='/selfdetails'||location.pathname==='/bussnissrecord'||location.pathname==='/myorders'||location.pathname==='/myprice'?
         (<MainLayout2 location={location}>{children}</MainLayout2>):
         ( <MainLayout location={location}>{children}</MainLayout>);
         

@@ -11,5 +11,3 @@ UNSAFE_componentWillMount(){
 }
     render() {return ( <div></div>)}
 }
-
-

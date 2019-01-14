@@ -68,24 +68,21 @@ export default class MainLayout2 extends React.Component {
         const {defaultSelectedKeys,atvator,userInfo}=this.state;
         return (<div style={{height:'100%'}}>
             <Layout style={{height:'100%'}}>
-                <Sider
-                breakpoint="lg"
-                >
+                <Sider breakpoint="lg" >
                     <div className={styles.logo}/>
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={[defaultSelectedKeys]}>
-                        <Menu.Item key="1"><Icon type="solution" /><span>我的订单</span></Menu.Item>
-                        <Menu.Item key="2"><Icon type="file-done" /><span >交易记录</span></Menu.Item>
+                        <Menu.Item key="1"><Link to="/myorders"><Icon type="solution" /><span>我的订单</span></Link></Menu.Item>
+                        <Menu.Item key="2"><Link to="/bussnissrecord"><Icon type="file-done" /><span >交易记录</span></Link></Menu.Item>
                         <Menu.Item key="/selfdetails"><Link to="/selfdetails"><Icon type="user" /> <span >个人资料</span></Link></Menu.Item>
+                        <Menu.Item key="/myprice"><Link to="/myprice"><Icon type="user" /> <span >设置价格</span></Link></Menu.Item>
+                        
                         <Menu.Item key="/enter"><Link to="/enter"><Icon type="user" /><span >我的导师资料</span></Link></Menu.Item>
                         <Menu.Item key="/home"><Link to="/home"><Icon type="poweroff" /><span >返回首页</span></Link></Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout>
                     <Header style={{ background: '#fff', padding: 0 }} >
-                        <Menu
-                           style={{ lineHeight: '63px', float: 'right',paddingRight:'20px' }}
-                            mode="horizontal"
-                        >
+                        <Menu  mode="horizontal" style={{ lineHeight: '63px', float: 'right',paddingRight:'20px' }}>
                             <Menu.Item key="userImg"><img src={atvator} alt="" style={{height:'50px',width:'50px',borderRadius:'50%'}} /></Menu.Item>
                             <Menu.Item key="username"><Icon type="idcard" /><span>{userInfo.username}</span></Menu.Item>
                             <Menu.Item key="id"><Icon type="money-collect" /><span>钻石:{userInfo.diamonds}</span></Menu.Item>

@@ -52,6 +52,7 @@ export default class Enter extends React.Component {
         }
     }
     UNSAFE_componentWillMount(){
+        const userName=store.get("username");
         console.log(this.props);
         const natureList=['特殊才艺','颜值担当','声音甜美','乖巧粘人','性感知心','激情四射',];
         const glamourList=["眼睛","鼻子","嘴巴","下巴","胸部","大腿","腰部","臀部","手","其他",];
@@ -71,7 +72,6 @@ export default class Enter extends React.Component {
             {title:'线上歌手',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20002.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20002.png',gameServiceNum:13,gameServiceStatus:0,},
             {title:'声音鉴定',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20021.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20021.png',gameServiceNum:14,gameServiceStatus:0,}
         ];
-        const userName=store.get("username");
         if(userName){
             const content =this;
             //联网获取userinfo
@@ -88,7 +88,6 @@ export default class Enter extends React.Component {
             response.json().then((res) => {
                 console.log(res);
                 // const{levels}=res.resuorce;
-                console.log("@@@@@@@@@@@@@@@@@@@@",res.resource.levels);
                 let gameServiceNumArr=[];
                 if(res.statusCode===107){
                     res.resource.serviceList.forEach((item,index)=>{ if(item.gameServiceStatus ===1){gameServiceNumArr.push(item.gameServiceNum);}});
