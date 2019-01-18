@@ -36,7 +36,9 @@ export default class Home extends React.Component {
            
     }
     UNSAFE_componentWillMount(){
-        fetch(`${programHost.APIhost}/awardRecord/scrolling`, {
+        const content = this;
+        //获取热门主播列表
+        fetch(`${programHost.APIhost}/user/view/anchor/list/1/8`, {
             method: 'GET',
             dataType: 'json',
             headers: new Headers({
@@ -45,20 +47,20 @@ export default class Home extends React.Component {
             }),
         }).then((res) => {
             res.json().then((data) => {
-            console.log(data)
+            console.log(data);
+            content.setState({homeHotRecommendArr:data.resource});
             });
         });
-        console.log(this.props);
-        const homeHotRecommendArr=[
-            {title:'最强王者',supervisorName:'瞳瞳', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'200',tips:['激情四射','颜值担当'],image:zb01,MCPosition:'上海',sex:0},
-            {title:'超凡大师',supervisorName:'大司马', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'1314',tips:['技术大师','逗比闲聊'],image:zb02,MCPosition:'上海',sex:1},
-            {title:'无畏青铜',supervisorName:'德云色', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'478',tips:['激情四射','颜值担当'],image:zb03,MCPosition:'上海',sex:1},
-            {title:'荣耀黄金',supervisorName:'PDD', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'456',tips:['激情四射','颜值担当'],image:zb05,MCPosition:'上海',sex:1},
-            {title:'不屈白银',supervisorName:'卢本伟', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'666',tips:['激情四射','颜值担当'],image:zb05,MCPosition:'上海',sex:0},
-            {title:'华贵白金',supervisorName:'周淑怡', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'777',tips:['激情四射','颜值担当'],image:zb06,MCPosition:'上海',sex:0},
-            {title:'璀璨钻石',supervisorName:'骚男', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'999',tips:['激情四射','颜值担当'],image:zb07,MCPosition:'上海',sex:1},
-            {title:'英勇黑铁',supervisorName:'浪子彦', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'1456',tips:['激情四射','颜值担当'],image:zb08,MCPosition:'上海',sex:0},
-        ];
+        // const homeHotRecommendArr=[
+        //     {title:'最强王者',supervisorName:'瞳瞳', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'200',tips:['激情四射','颜值担当'],image:zb01,MCPosition:'上海',sex:0},
+        //     {title:'超凡大师',supervisorName:'大司马', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'1314',tips:['技术大师','逗比闲聊'],image:zb02,MCPosition:'上海',sex:1},
+        //     {title:'无畏青铜',supervisorName:'德云色', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'478',tips:['激情四射','颜值担当'],image:zb03,MCPosition:'上海',sex:1},
+        //     {title:'荣耀黄金',supervisorName:'PDD', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'456',tips:['激情四射','颜值担当'],image:zb05,MCPosition:'上海',sex:1},
+        //     {title:'不屈白银',supervisorName:'卢本伟', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'666',tips:['激情四射','颜值担当'],image:zb05,MCPosition:'上海',sex:0},
+        //     {title:'华贵白金',supervisorName:'周淑怡', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'777',tips:['激情四射','颜值担当'],image:zb06,MCPosition:'上海',sex:0},
+        //     {title:'璀璨钻石',supervisorName:'骚男', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'999',tips:['激情四射','颜值担当'],image:zb07,MCPosition:'上海',sex:1},
+        //     {title:'英勇黑铁',supervisorName:'浪子彦', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'1456',tips:['激情四射','颜值担当'],image:zb08,MCPosition:'上海',sex:0},
+        // ];
         const newShowArr =[
              {newShowImage:newShow1,newShowName:'jiajia',newShowPosition:'上海',newShowSex:1,newShowAge:21,},
              {newShowImage:newShow2,newShowName:'jiajia',newShowPosition:'上海',newShowSex:1,newShowAge:22,},
@@ -105,7 +107,7 @@ export default class Home extends React.Component {
         ];
         this.setState({
             bannerImgArr:[banner1,banner2,banner3,banner4,banner5],
-            homeHotRecommendArr,
+            // homeHotRecommendArr,
             newShowArr,
             exampleHotArr,
             exampleGiftArr,
@@ -118,6 +120,7 @@ export default class Home extends React.Component {
     }
     //查看主播个人主页
     toDetails(item){
+        console.log(item);
         const{history}=this.props;
         history.push({pathname:'/mcdetails'});
         store.set("mcdetail",item);
@@ -146,17 +149,17 @@ export default class Home extends React.Component {
                     {homeHotRecommendArr.map((item,index)=>{return(
                         <Col span={6} key={index} className={styles.homeHotRecommendCol}>
                             <div className={styles.homeSupervisor} onClick={()=>{this.toDetails(item);}}>
-                                <div className={styles.homeSupervisorTitle}>{item.title}</div>
-                                <img className={styles.homeSupervisorImg} alt="" src={item.image} />
+                                <div className={styles.homeSupervisorTitle}>{item.game?item.game.service_gameLevel:666}</div>
+                                <img className={styles.homeSupervisorImg} alt="" src={zb01} />
                                 <div className={styles.homeSupervisorText}>
                                     <div className={styles.homeSupervisorTextTop}>
-                                        <div className={styles.homeSupervisorName}>{item.supervisorName}</div>
-                                        <div className={styles.homeSupervisorTips1}>{item.tips[0]}</div>
-                                        <div className={styles.homeSupervisorTips2}>{item.tips[1]}</div>
+                                        <div className={styles.homeSupervisorName}>{item.nickname}</div>
+                                        <div className={styles.homeSupervisorTips1}>{item.labels[0]}</div>
+                                        <div className={styles.homeSupervisorTips2}>{item.labels[1]}</div>
                                     </div>
                                     <div className={styles.homeSupervisorTextBottom}>
-                                        <div className={styles.homeSupervisorItem}>{item.palyItem[0]}</div>
-                                        <div className={styles.homeSupervisorPrice}><span style={{fontSize:'30px'}}>{item.price}</span>元/小时</div>
+                                        <div className={styles.homeSupervisorItem}>{item.game?item.game.title:666}</div>
+                                        <div className={styles.homeSupervisorPrice}><span style={{fontSize:'30px'}}>{item.game?item.game.price:666}</span>元/小时</div>
                                     </div>
                                 </div>
                             </div>

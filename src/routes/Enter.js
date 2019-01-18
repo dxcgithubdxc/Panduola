@@ -232,8 +232,8 @@ export default class Enter extends React.Component {
         if(nickName===""||pickerValue.length===0||phoneNumber===""||birthday===""||QQNumber===""||natureSign===""){message.warn('请完善您的基本信息！！');return;}
         if(checkedNatureList.length!==2){message.warn('个性标签请选择两项！！');return;}
         if(checkedglamourList.length>0&checkedglamourList.length!==3){message.warn('魅力部位请选择3项！！');return;}
+        if(gameServiceNumArr.length>=7){message.warn('每个主播最多申请7个服务项目！！');return;}
         let sbdata={}
-            
             if(gameServiceNum===1){//如果选择了LOL
                 if(LOLID==="" ||LOLArea===""||LOLSection===""){message.warn('请完善您的LOL信息！！');return;}
                 sbdata={

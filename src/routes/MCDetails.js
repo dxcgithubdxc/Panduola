@@ -3,6 +3,7 @@ import moment from 'moment';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
 import { Row, Col, Icon, Modal,Input,InputNumber,Popover,DatePicker, Button,Tabs } from 'antd';
 import styles from '../styles/MCDetails.css';
+import *as programHost from '../utils/ajax';
 import zb01 from '../assets/zb01.jpg';
 import ewm1 from '../assets/ewm1.jpg';
 const store=require('store');
@@ -27,11 +28,22 @@ export default class MCDetails extends React.Component {
         }
   }
     UNSAFE_componentWillMount(){
-        // const userId=store.get("userId");
-        //     if(!userId){}
-        console.log(this.props);
-        const detail=store.get("mcdetail");
-        console.log(detail);
+        const mcdetail=store.get('mcdetail');
+        const content = this;
+        //获取热门主播列表
+        fetch(`${programHost.APIhost}/user/get/anchor/info/${mcdetail._id}`, {
+            method: 'GET',
+            dataType: 'json',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'text/plain;charset=UTF-8',
+            }),
+        }).then((res) => {
+            res.json().then((data) => {
+            console.log(data);
+            content.setState({MCDetail:data.resource});
+            });
+        });
         const imgArr=[
             'https://tuwanpicshare.oss-cn-qingdao.aliyuncs.com/dyimage/359133_QTjZGPXebk_1536076178724.jpg?.jpg',
             'https://tuwanpicshare.oss-cn-qingdao.aliyuncs.com/dyimage/359133_nBWNbhpsC3_1541194282782.jpg?.jpg',
@@ -83,7 +95,7 @@ export default class MCDetails extends React.Component {
             {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:12,num:2},
             {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:13,num:2},
         ];
-        this.setState({MCDetail:detail,MCimgArr:imgArr,selectedMCImg:imgArr[0],giftsArr:giftArr,selectedGiftItem:giftArr[0][0],gotGiftsList:giftsList});
+        this.setState({MCimgArr:imgArr,selectedMCImg:imgArr[0],giftsArr:giftArr,selectedGiftItem:giftArr[0][0],gotGiftsList:giftsList});
         
     }
     // 选择礼物
@@ -121,24 +133,24 @@ export default class MCDetails extends React.Component {
             <div className={styles.container}>
             {/* 头部标签栏 */}
                 <div className={styles.MCDetailHeader}>
-                    <div className={styles.MCDetailMsg}>
+                    {/* <div className={styles.MCDetailMsg}>
                         <img className={styles.MCDetailAvtor} src={MCDetail.image} alt="" />
                             <div className={styles.MCDetailMsgContent}>
                             <div className={styles.MCDetailName}>{MCDetail.supervisorName}</div>
                             <div className={styles.MCDetailTitle}>信用值：<span style={{color:'red'}}>{MCDetail.title}</span></div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className={styles.MCDetail2}>
                         <div className={styles.xiadan}>
                             <Popover content={wxPlaceOrderContent} title="微信扫描即可下单" trigger="hover"><Button>微信下单</Button></Popover>
                         </div>
-                        <div className={styles.MCDetailPS}>
+                        {/* <div className={styles.MCDetailPS}>
                             {MCDetail.sex===0?
                             <span style={{display:'inline-block',width:40,borderRadius:5,textAlign:'center',background:'#ffabad',color:'white',marginRight:20}}>♀</span>:
                             <span style={{display:'inline-block',width:40,borderRadius:5,textAlign:'center',background:'#97bcf0',color:'white',marginRight:20}}>♂</span>
                             }
                             <span style={{fontSize:'14px',color:'#999'}}>坐标：{MCDetail.MCPosition}</span>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 {/* 主题部分 */}
@@ -256,7 +268,7 @@ export default class MCDetails extends React.Component {
                             </div>
                             {/* 服务详情 */}
                             <div className={styles.gameItem}>
-                                <Tabs defaultActiveKey={MCDetail.palyItem[0]} >
+                                {/* <Tabs defaultActiveKey={MCDetail.palyItem[0]} >
                                 {MCDetail.palyItem.map((item,index)=>{return(
                                     <TabPane tab={item} key={item}>
                                         <div className={styles.gameItemTitleMsg}>
@@ -285,8 +297,8 @@ export default class MCDetails extends React.Component {
                                                     </div>
                                                 </Col>
                                             </Row>
-                                            {/* 服务介绍 */}
-                                            <div className={styles.gameIntroducetitle}><span style={{fontSize:20,fontWeight:'bold'}}>介绍</span>/INTRODUCE</div>
+                                            
+                                            <div className={styles.gameIntroducetitle}><span style={{fontSize:20,fontWeight:'bold'}}>服务介绍</span>/INTRODUCE</div>
                                             <div className={styles.gameIntroduceContent}>
                                                 <div className={styles.gameIntroduceText}>羡慕那些敢爱敢恨的人</div>
                                                 <div className={styles.gameIntroduceText}>羡慕那些敢爱敢恨的人</div>
@@ -296,7 +308,7 @@ export default class MCDetails extends React.Component {
                                         </div>
                                     </TabPane>
                                 )})}
-                                </Tabs>
+                                </Tabs> */}
                             </div>
                         </Col>
                     </Row>
@@ -314,8 +326,8 @@ export default class MCDetails extends React.Component {
                 <div className={styles.plactOrderMsg}>
                     <Row>
                         <Col span={3}>导师：</Col>
-                        <Col span={3}><img src={MCDetail.image}className={styles.oederImg} alt="" /></Col>
-                        <Col span={3}>{MCDetail.supervisorName}</Col>
+                        {/* <Col span={3}><img src={MCDetail.image}className={styles.oederImg} alt="" /></Col>
+                        <Col span={3}>{MCDetail.supervisorName}</Col> */}
                         <Col span={4}/>
                         <Col span={3}>服务：</Col>
                         <Col span={3}><img src="http://res.tuwan.com/templet/play/teacher/images/sound_3.png" className={styles.oederImg} alt="" /></Col>
