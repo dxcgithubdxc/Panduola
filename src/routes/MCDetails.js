@@ -30,20 +30,7 @@ export default class MCDetails extends React.Component {
     UNSAFE_componentWillMount(){
         const mcdetail=store.get('mcdetail');
         const content = this;
-        //获取热门主播列表
-        fetch(`${programHost.APIhost}/user/get/anchor/info/${mcdetail._id}`, {
-            method: 'GET',
-            dataType: 'json',
-            headers: new Headers({
-                Accept: 'application/json',
-                'Content-Type': 'text/plain;charset=UTF-8',
-            }),
-        }).then((res) => {
-            res.json().then((data) => {
-            console.log(data);
-            content.setState({MCDetail:data.resource});
-            });
-        });
+        content.setState({MCDetail:mcdetail});
         const imgArr=[
             'https://tuwanpicshare.oss-cn-qingdao.aliyuncs.com/dyimage/359133_QTjZGPXebk_1536076178724.jpg?.jpg',
             'https://tuwanpicshare.oss-cn-qingdao.aliyuncs.com/dyimage/359133_nBWNbhpsC3_1541194282782.jpg?.jpg',
@@ -101,7 +88,8 @@ export default class MCDetails extends React.Component {
     // 选择礼物
     checkGift(item){this.setState({selectedGiftItem:item}); }
     placeOrder(item){
-        this.setState({placeOrderModalVisiable:true,selectedGame:item});
+        console.log('selectedGame',item);
+        this.setState({placeOrderModalVisiable:true,selectedGame:item}); 
     }
     surePlaceOrder(){
 
@@ -129,28 +117,29 @@ export default class MCDetails extends React.Component {
             // Can not select days before today and today
             return current && current < moment().endOf('day');
         }
+        console.log('MCDetail',MCDetail);
         return (<div>
             <div className={styles.container}>
             {/* 头部标签栏 */}
                 <div className={styles.MCDetailHeader}>
-                    {/* <div className={styles.MCDetailMsg}>
-                        <img className={styles.MCDetailAvtor} src={MCDetail.image} alt="" />
+                    <div className={styles.MCDetailMsg}>
+                        <img className={styles.MCDetailAvtor} src={zb01} alt="" />
                             <div className={styles.MCDetailMsgContent}>
-                            <div className={styles.MCDetailName}>{MCDetail.supervisorName}</div>
-                            <div className={styles.MCDetailTitle}>信用值：<span style={{color:'red'}}>{MCDetail.title}</span></div>
+                            <div className={styles.MCDetailName}>{MCDetail.nickname}</div>
+                            <div className={styles.MCDetailTitle}>信用值：<span style={{color:'red'}}>{MCDetail.creditValue}</span></div>
                         </div>
-                    </div> */}
+                    </div>
                     <div className={styles.MCDetail2}>
                         <div className={styles.xiadan}>
                             <Popover content={wxPlaceOrderContent} title="微信扫描即可下单" trigger="hover"><Button>微信下单</Button></Popover>
                         </div>
-                        {/* <div className={styles.MCDetailPS}>
+                        <div className={styles.MCDetailPS}>
                             {MCDetail.sex===0?
                             <span style={{display:'inline-block',width:40,borderRadius:5,textAlign:'center',background:'#ffabad',color:'white',marginRight:20}}>♀</span>:
                             <span style={{display:'inline-block',width:40,borderRadius:5,textAlign:'center',background:'#97bcf0',color:'white',marginRight:20}}>♂</span>
                             }
-                            <span style={{fontSize:'14px',color:'#999'}}>坐标：{MCDetail.MCPosition}</span>
-                        </div> */}
+                            <span style={{fontSize:'14px',color:'#999'}}>坐标：{MCDetail.province}</span>
+                        </div>
                     </div>
                 </div>
                 {/* 主题部分 */}
@@ -222,7 +211,7 @@ export default class MCDetails extends React.Component {
                                         </div>
                                     </TabPane>
                                 </Tabs>
-                                <div style={{height:30,lineHeight:'30px',fontSize:12}}>剩余钻石：0</div>
+                                <div style={{height:30,lineHeight:'30px',fontSize:12}}>剩余钻石：{MCDetail.diamonds}</div>
                                 <div className={styles.inputGiftNum}>
                                     <Row>
                                         <Col span={8}>已选礼物：{selectedGiftItem.title}</Col>
@@ -235,12 +224,12 @@ export default class MCDetails extends React.Component {
                             <div className={styles.MCSelfMsg}>
                             <Tabs defaultActiveKey="1">
                                 <TabPane tab="个人资料" key="1">
-                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>身高：</Col><Col span={4}>176CM</Col></Row></div>
-                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>星座：</Col><Col span={18}>摩羯座</Col></Row></div>
-                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>职业：</Col><Col span={18}>其他</Col></Row></div>
-                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>魅力部位：</Col><Col span={18}>耳朵、嘴唇</Col></Row></div>
-                                    <div className={styles.MCSelfMsgItem}> <Row><Col span={6}>个性标签：</Col><Col span={18}>情感知心、激情四射</Col></Row></div>
-                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>兴趣爱好：</Col><Col span={18}>听音乐</Col></Row></div>
+                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>身高：</Col><Col span={4}>{MCDetail.height}CM</Col></Row></div>
+                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>星座：</Col><Col span={18}>{MCDetail.height}摩羯座</Col></Row></div>
+                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>职业：</Col><Col span={18}>{MCDetail.occupation}</Col></Row></div>
+                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>魅力部位：</Col><Col span={18}>{MCDetail.charmPosition[0]}、{MCDetail.charmPosition[1]}、{MCDetail.charmPosition[2]}</Col></Row></div>
+                                    <div className={styles.MCSelfMsgItem}> <Row><Col span={6}>个性标签：</Col><Col span={18}>{MCDetail.labels[0]}、{MCDetail.labels[1]}</Col></Row></div>
+                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>兴趣爱好：</Col><Col span={18}>{MCDetail.interest}</Col></Row></div>
                                 </TabPane>
                             </Tabs>
                             </div>
@@ -268,14 +257,14 @@ export default class MCDetails extends React.Component {
                             </div>
                             {/* 服务详情 */}
                             <div className={styles.gameItem}>
-                                {/* <Tabs defaultActiveKey={MCDetail.palyItem[0]} >
-                                {MCDetail.palyItem.map((item,index)=>{return(
-                                    <TabPane tab={item} key={item}>
+                                <Tabs defaultActiveKey={MCDetail.gameList[0]._id} >
+                                {MCDetail.gameList.map((item,index)=>{return(
+                                    <TabPane tab={item.title} key={item._id}>
                                         <div className={styles.gameItemTitleMsg}>
                                             <Row>
                                                 <Col span={4}>
                                                     <div className={styles.gameItemTitleMsg1}>
-                                                        <img src="http://res.tuwan.com/templet/play/teacher/images/sound_3.png" className={styles.gameItemTitleMsgImg} alt="" />
+                                                        <img src={item.selectedImg} className={styles.gameItemTitleMsgImg} alt="" />
                                                         <div className={styles.gameItemTitleAudio}>
                                                             <div className={styles.gameItemTitleAudioContent}>25</div>
                                                         </div>
@@ -283,16 +272,16 @@ export default class MCDetails extends React.Component {
                                                 </Col>
                                                 <Col span={8}>
                                                     <div className={styles.gameItemTitleMsg1}>
-                                                       <div className={styles.gameItemTitleStation}>{item}</div>
-                                                       <div className={styles.gameItemTitleO}>树荫</div>
-                                                       <div className={styles.gameItemTitleO}>接单次数：1330次</div>
+                                                       <div className={styles.gameItemTitleStation}>{item.title}</div>
+                                                       <div className={styles.gameItemTitleO}>{item.roteLabel}</div>
+                                                       <div className={styles.gameItemTitleO}>接单次数：{item.orderNum?item.orderNum:0}次</div>
                                                     </div>
                                                 </Col>
                                                 <Col span={4}></Col>
                                                 <Col span={4}></Col>
                                                 <Col span={4}>
                                                     <div className={styles.gameItemTitleMsg1}>
-                                                       <div className={styles.gameItemTitlePrice}><span style={{fontSize:30,color:'red'}}>￥140</span>/次</div>
+                                                       <div className={styles.gameItemTitlePrice}><span style={{fontSize:30,color:'red'}}>￥{item.price}</span>/次</div>
                                                        <div className={styles.gameItemTitlePrice}><Button type="primary" size="large" onClick={this.placeOrder.bind(this,item)}>下单约Ta</Button></div>
                                                     </div>
                                                 </Col>
@@ -308,7 +297,7 @@ export default class MCDetails extends React.Component {
                                         </div>
                                     </TabPane>
                                 )})}
-                                </Tabs> */}
+                                </Tabs>
                             </div>
                         </Col>
                     </Row>
@@ -326,12 +315,12 @@ export default class MCDetails extends React.Component {
                 <div className={styles.plactOrderMsg}>
                     <Row>
                         <Col span={3}>导师：</Col>
-                        {/* <Col span={3}><img src={MCDetail.image}className={styles.oederImg} alt="" /></Col>
-                        <Col span={3}>{MCDetail.supervisorName}</Col> */}
+                        <Col span={3}><img src="http://img3.tuwandata.com/uploads/play/201803/359133-05054952.jpeg?.jpg" className={styles.oederImg} alt="" /></Col>
+                        <Col span={3}>{MCDetail.supervisorName}</Col>
                         <Col span={4}/>
                         <Col span={3}>服务：</Col>
-                        <Col span={3}><img src="http://res.tuwan.com/templet/play/teacher/images/sound_3.png" className={styles.oederImg} alt="" /></Col>
-                        <Col span={4}><span>{selectedGame}</span></Col>
+                        <Col span={3}><img src={selectedGame.selectedImg} className={styles.oederImg} alt="" /></Col>
+                        <Col span={4}><span>{selectedGame.title}</span></Col>
                     </Row>
                 </div>
                 <div className={styles.plactOrderFormItem}>

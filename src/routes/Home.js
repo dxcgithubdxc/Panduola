@@ -122,8 +122,21 @@ export default class Home extends React.Component {
     toDetails(item){
         console.log(item);
         const{history}=this.props;
-        history.push({pathname:'/mcdetails'});
-        store.set("mcdetail",item);
+        // 获取主播的信息
+        fetch(`${programHost.APIhost}/user/get/anchor/info/${item._id}`, {
+            method: 'GET',
+            dataType: 'json',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'text/plain;charset=UTF-8',
+            }),
+        }).then((res) => {
+            res.json().then((data) => {
+            store.set("mcdetail",data.resource);
+            history.push({pathname:'/mcdetails'});
+            });
+        });
+        
     }
     render() {
         const {bannerImgArr,homeHotRecommendArr,newShowArr,exampleHotArr,exampleGiftArr,exampleRichArr}=this.state;
