@@ -8,11 +8,24 @@ export default class Recharge extends React.Component {
     super(props);
         this.state={
             accountLeft:'',
-            rechargeTypeList:[],
-            rechargeNumberList:[],
-            rechargeNumber:'5',
-            rechargeNumber2:' ',
-            rechargeType:0,
+            rechargeTypeList: [
+                {
+                    title:'微信支付',
+                    img:'//res.tuwan.com/templet/teach/play/recharge/images/wechat.jpg',
+                    selectedImg:'//res.tuwan.com/templet/teach/play/recharge/images/wechat_hover.jpg?1 ',
+                    typeId:0,
+                },
+                {
+                    title:'支付宝支付',
+                    img:'//res.tuwan.com/templet/teach/play/recharge/images/alipay.jpg',
+                    selectedImg:'//res.tuwan.com/templet/teach/play/recharge/images/alipay_hover.jpg ',
+                    typeId:1,
+                }
+            ],
+            rechargeNumberList:['5','30','50','100','300','500'],
+            rechargeNumber:'5',//用户选择的金额
+            rechargeNumber2:' ',//用户输入的金额
+            rechargeType:0,//0是微信 1是支付宝
         }
   }
     UNSAFE_componentWillMount(){
@@ -44,14 +57,7 @@ export default class Recharge extends React.Component {
         }
         
     }
-    componentDidMount(){
-        const rechargeNumberList=['5','30','50','100','300','500'];
-        const rechargeTypeList=[
-            {title:'微信支付',img:'//res.tuwan.com/templet/teach/play/recharge/images/wechat.jpg',selectedImg:'//res.tuwan.com/templet/teach/play/recharge/images/wechat_hover.jpg?1 ',typeId:0,},
-            {title:'支付宝支付',img:'//res.tuwan.com/templet/teach/play/recharge/images/alipay.jpg',selectedImg:'//res.tuwan.com/templet/teach/play/recharge/images/alipay_hover.jpg ',typeId:1,}
-        ];
-        this.setState({rechargeNumberList,rechargeTypeList});
-    }
+    componentDidMount(){}
     setRechargeNumber(item){
         this.setState({rechargeNumber2:' ',rechargeNumber:item});
     }
@@ -59,9 +65,40 @@ export default class Recharge extends React.Component {
         this.setState({rechargeType:item.typeId});
     }
     rechargeDimond(){
-        const{rechargeNumber2,rechargeNumber}=this.state;
+        const userName=store.get("username");
+        if(!userName){message.warn('您还没登录，请先登录');return;}
+        const{rechargeNumber2,rechargeNumber,rechargeType}=this.state;
         if(Number(rechargeNumber2)===0&&Number(rechargeNumber)===0){message.warn('请选择充值金额！！');return}
-        console.log('rechargeNumber2:',Number(rechargeNumber2),'rechargeNumber:',Number(rechargeNumber));
+        if(rechargeType===0){message.warn('微信支付暂时不能用，请选择支付宝充值');return;}
+        // console.log('rechargeNumber2:',Number(rechargeNumber2),'rechargeNumber:',Number(rechargeNumber));
+        const sbdata= {
+                "tranpwd":"string",
+                "total_fee": Number(rechargeNumber2)===0?Number(rechargeNumber):Number(rechargeNumber2),
+                "type": rechargeType,
+              }
+        // console.log(programHost.getAuth('/chongzhi/alipay/payment'));
+         fetch(`${programHost.APIhost}/chongzhi/alipay/payment`, {
+            method: 'POST',
+            mode: 'cors',
+            body:JSON.stringify(sbdata),
+            credentials: 'include',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization':programHost.getAuth('/chongzhi/alipay/payment'),// 除登录之外，获取登录的token都不需要username和password
+            }),
+            }).then((response) => {
+            console.log(response);
+            response.json().then((res) => {
+                console.log(res);
+                if(res.statusCode===107){
+                    // window.open(res.resource,'_blank');
+                    window.location.href=res.resource;
+                }
+                },(data) => {
+                console.log(data)
+            });
+            });
     }
     render() {
         const {accountLeft,rechargeNumberList,rechargeNumber,rechargeNumber2,rechargeTypeList,rechargeType}=this.state;

@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import locale from 'antd/lib/date-picker/locale/zh_CN';
-import { Row, Col, Icon, Modal,Input,InputNumber,Popover,DatePicker, Button,Tabs } from 'antd';
+import { Row, Col, Icon, Modal,Input,InputNumber,Popover,DatePicker, Button,Tabs,message } from 'antd';
 import styles from '../styles/MCDetails.css';
 import *as programHost from '../utils/ajax';
 import zb01 from '../assets/zb01.jpg';
@@ -23,8 +23,9 @@ export default class MCDetails extends React.Component {
             orderTime:"",
             orderPeriod:1,
             remark:"",
-            selectedGame:"",
+            selectedGame:{},
             orderPrice:0,
+            accountLeft:0,
         }
   }
     UNSAFE_componentWillMount(){
@@ -83,14 +84,47 @@ export default class MCDetails extends React.Component {
             {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:13,num:2},
         ];
         this.setState({MCimgArr:imgArr,selectedMCImg:imgArr[0],giftsArr:giftArr,selectedGiftItem:giftArr[0][0],gotGiftsList:giftsList});
-        
+        const userName=store.get("username");
+        if(userName){
+            const content =this;
+            //联网获取userinfo
+            return fetch(`${programHost.APIhost}/user/info`, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization':programHost.getAuth('/user/info'),// 除登录之外，获取登录的token都不需要username和password
+            }),
+            }).then((response) => {
+            console.log(response);
+            response.json().then((res) => {
+                console.log(res);
+                if(res.statusCode===107){
+                    content.setState({accountLeft:res.resource.diamonds});
+                }
+                },(data) => {
+                console.log(data)
+            });
+            });
+        }
     }
     // 选择礼物
     checkGift(item){this.setState({selectedGiftItem:item}); }
+    //赠送主播礼物
+    sendGift(){
+        const userName=store.get("username");
+        if(!userName){message.warn('您还没登录，请先登录');return;}
+    }
+    //下单
     placeOrder(item){
+        const userName=store.get("username");
+        if(!userName){message.warn('您还没登录，请先登录');return;}
         console.log('selectedGame',item);
         this.setState({placeOrderModalVisiable:true,selectedGame:item}); 
     }
+    //确认下单
     surePlaceOrder(){
 
     }
@@ -107,7 +141,7 @@ export default class MCDetails extends React.Component {
         })
     }
     render() {
-        const {MCDetail,MCimgArr,selectedMCImg,giftsArr,selectedGiftItem,sendGiftNum,gotGiftsList,placeOrderModalVisiable,orderTime,orderPeriod,orderPrice,remark,selectedGame}=this.state;
+        const {MCDetail,MCimgArr,selectedMCImg,giftsArr,selectedGiftItem,sendGiftNum,gotGiftsList,placeOrderModalVisiable,orderTime,orderPeriod,orderPrice,remark,selectedGame,accountLeft}=this.state;
         const wxPlaceOrderContent = (
             <div>
               <img style={{width:145,height:145}} src={ewm1} alt="" />
@@ -211,12 +245,12 @@ export default class MCDetails extends React.Component {
                                         </div>
                                     </TabPane>
                                 </Tabs>
-                                <div style={{height:30,lineHeight:'30px',fontSize:12}}>剩余钻石：{MCDetail.diamonds}</div>
+                                <div style={{height:30,lineHeight:'30px',fontSize:12}}>剩余钻石：{accountLeft}</div>
                                 <div className={styles.inputGiftNum}>
                                     <Row>
                                         <Col span={8}>已选礼物：{selectedGiftItem.title}</Col>
                                         <Col span={8}><InputNumber min={1} defaultValue={1} vlue={sendGiftNum}  onChange={(val)=>{this.setState({sendGiftNum:val});}} /></Col>
-                                        <Col span={8}><Button>赠送</Button></Col>
+                                        <Col span={8}><Button onClick={()=>{this.sendGift();}}>赠送</Button></Col>
                                     </Row>
                                 </div>
                             </div>
@@ -329,7 +363,7 @@ export default class MCDetails extends React.Component {
                         <Col span={16}>
                             <DatePicker
                                 locale={locale}
-                                onChange={(val,date)=>{this.setState({orderTime:date})}}
+                                onChange={(val,date)=>{ console.log(moment(date).valueOf());  this.setState({orderTime:date})}}
                                 format="YYYY-MM-DD HH:mm:ss"
                                 disabledDate={disabledDate}
                                 showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
@@ -340,7 +374,7 @@ export default class MCDetails extends React.Component {
                 <div className={styles.plactOrderFormItem}>
                     <Row>
                         <Col span={8}>约玩周期（小时）：</Col>
-                        <Col span={16}><InputNumber min={1} defaultValue={1} value={orderPeriod}  onChange={(val)=>{this.setState({orderPeriod:val,orderPrice:140*val-0});}} /></Col>
+                        <Col span={16}><InputNumber min={1} defaultValue={1} value={orderPeriod}  onChange={(val)=>{this.setState({orderPeriod:val,orderPrice:selectedGame.price*val-0});}} /></Col>
                     </Row>
                 </div>
                 <div className={styles.plactOrderFormItem}>
@@ -352,7 +386,7 @@ export default class MCDetails extends React.Component {
                 <div className={styles.plactOrderFormItem}>
                     <Row>
                         <Col span={18}></Col>
-                        <Col span={6}>总价：{140*Number(orderPeriod)}元</Col>
+                        <Col span={6}>总价：{selectedGame.price*Number(orderPeriod)}元</Col>
                     </Row>
                 </div>
                 <div className={styles.plactOrderFormItem}>

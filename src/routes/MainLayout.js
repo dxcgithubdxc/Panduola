@@ -226,14 +226,14 @@ export default class MainLayout extends Component {
               <Menu.Item key="/playlist"><Link to="/playlist">约陪玩</Link></Menu.Item>
               <Menu.Item key="/preference"><Link to="/preference">特惠专区</Link></Menu.Item>
               <Menu.Item key="/recharge"><Link to="/recharge">充值</Link></Menu.Item>
-                <Dropdown key="setting:a" overlay={menu} placement="bottomLeft">
-                  <Button>微信公众号</Button>
-                </Dropdown>
-              <Menu.Item key="/enter" onClick={()=>{this.Enter();}}><Icon type="flag" />申请入驻</Menu.Item>
+                
               {
                 store.get("username")?<Menu.Item key="setting:8"><Link to="/enter"><Icon type="team" />会员中心</Link></Menu.Item>:<Menu.Item key="setting:7" onClick={()=>{this.setState({loginModalVisible:true})}}><Icon type="user" />注册/登录</Menu.Item>
                 }
-              
+              <Dropdown key="setting:a" overlay={menu} placement="bottomLeft">
+                  <Button>微信公众号</Button>
+                </Dropdown>
+              <Menu.Item key="/enter" onClick={()=>{this.Enter();}}><Icon type="flag" />申请入驻</Menu.Item>
             </Menu>
           </Header>
         </div>
