@@ -169,6 +169,43 @@ export default class Enter extends React.Component {
     //预览段位封面图
     handlePreview3(file){this.setState({ previewImg: file.url || file.thumbUrl,previewVisible: true,});}
     handleCancel3(){this.setState({ previewVisible: false });}
+
+    //上传封面照片
+  getLocalImg(e){
+    const { uploadImageAct } = this.props;
+    const content = this;
+    var formData = new FormData();
+    formData.append("Filename", e.target.files[0].name);
+    formData.append("imgFile",e.target.files[0]);
+    fetch(`${programHost.APIhost}/file`, {
+        method: 'POST',
+        dataType: 'json',
+        body:JSON.stringify(formData),
+        mode: 'cors',
+        credentials: 'include',
+        headers: new Headers({
+            Accept: 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8',
+            // 'Authorization':programHost.getAuth('/user/apply/tutor'),// 获取token
+        }),
+      }).then((response) => {
+        console.log(response);
+        response.json().then((res) => {
+            console.log(res);
+            // if(res.statusCode===107){
+            //     message.success(res.message);
+            //     content.UNSAFE_componentWillMount();
+            // }else{message.warn(res.message)}
+          },(data) => {
+          console.log(data)
+        });
+      });
+    // uploadImageAct(formData).then(function(data){
+    //   if(data.error==0){
+    //     content.setState({imgUrl:data.url});
+    //   }
+    // });
+  }
     //填写身高
     inputStature(e){ this.setState({stature:e.target.value});}
     //填写体重
@@ -453,12 +490,12 @@ export default class Enter extends React.Component {
                         </Row>
                     </div>
                     <div className={styles.partItem}>
-                        <Row>
+                        {/* <Row>
                             <Col span={4}><div className={styles.partItemDiv}><span className={styles.partTopMust}>*</span>APP主页封面：</div></Col>
                             <Col span={4}>
                                 <div className={styles.partItemDiv2}>
                                     <Upload
-                                        action="//jsonplaceholder.typicode.com/posts/"
+                                        action="http://www.pdlwan.com:5000/file"
                                         listType="picture-card"
                                         fileList={fileList}
                                         onPreview={this.handlePreview.bind(this)}
@@ -473,7 +510,32 @@ export default class Enter extends React.Component {
                             </Col>
                             {fileList.length >= 1 ?<Col span={4}><div className={styles.partItemDiv2}><img style={{width:100,height:100}} src={APPTopImg} alt="" /></div></Col>:""}
                             <Col span={12}><div className={styles.partItemDiv}>请上传您的主页封面照，建议大小为：750*1334</div></Col>
-                        </Row>
+                        </Row> */}
+                        <Row gutter={16} style={{marginTop:20}}>
+          <Col span={4} style={{textAlign:"right",paddingTop:6}}><h4>产品图片</h4></Col>
+          <Col span={12}>
+            <form id= "uploadForm">
+              <h4 className="clearMargin">
+                <style>
+                  {
+                    `
+                        .fengmianDiv{
+                          width: 246px;
+                          height: 130px;
+                        }
+                        .fengmianDiv input{ display:none;}
+                        .fengmianDiv img{ width: 110px; height: 130px;}
+                        `
+                  }
+                </style>
+                <label className="fengmianDiv">
+                  <input type="file" onChange={this.getLocalImg.bind(this)} />
+                  < img className="id_card" ref="cover" name="enter_imgsPath" src={this.state.imgUrl!=""?programHost+this.state.imgUrl:"/public/img/jia.jpg"} />
+                </label>
+              </h4>
+            </form>
+          </Col>
+        </Row>
                     </div>
                 </div>
                 {/* 选填资料 */}

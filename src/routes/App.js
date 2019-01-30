@@ -10,7 +10,7 @@ import MainLayout2 from './MainLayout2'
 
 let lastHref;
 
-   class App extends Component {
+class App extends Component {
     render() {
         let { loading, children, location } = this.props;
         const { href } = window.location;

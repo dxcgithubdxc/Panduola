@@ -85,7 +85,7 @@ export default class MCDetails extends React.Component {
         ];
         this.setState({MCimgArr:imgArr,selectedMCImg:imgArr[0],giftsArr:giftArr,selectedGiftItem:giftArr[0][0],gotGiftsList:giftsList});
         const userName=store.get("username");
-        if(userName){
+        if(userName!==undefined&&userName.username){
             const content =this;
             //联网获取userinfo
             return fetch(`${programHost.APIhost}/user/info`, {
@@ -115,12 +115,12 @@ export default class MCDetails extends React.Component {
     //赠送主播礼物
     sendGift(){
         const userName=store.get("username");
-        if(!userName){message.warn('您还没登录，请先登录');return;}
+        if(!userName.username){message.warn('您还没登录，请先登录');return;}
     }
     //下单
     placeOrder(item){
         const userName=store.get("username");
-        if(!userName){message.warn('您还没登录，请先登录');return;}
+        if(!userName.username){message.warn('您还没登录，请先登录');return;}
         this.setState({placeOrderModalVisiable:true,selectedGame:item}); 
         
     }
