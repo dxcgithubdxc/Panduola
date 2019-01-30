@@ -140,7 +140,7 @@
 .newShow{
     background: #ffabad;
     height:200px;
-    background: #fff;
+    /* background: #fff; */
     padding:20px;
 }
 .newShowTitle{

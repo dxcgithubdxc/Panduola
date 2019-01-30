@@ -72,7 +72,7 @@ export default class Enter extends React.Component {
             {title:'线上歌手',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20002.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20002.png',gameServiceNum:13,gameServiceStatus:0,},
             {title:'声音鉴定',img:'https://res.tuwan.com/templet/play/images/playinfo/apply_20021.png',selectedImg:'https://res.tuwan.com/templet/play/images/playinfo/apply_hover_20021.png',gameServiceNum:14,gameServiceStatus:0,}
         ];
-        if(userName){
+        if(userName!==undefined&&userName.username){
             const content =this;
             //联网获取userinfo
             return fetch(`${programHost.APIhost}/user/apply/info`, {
@@ -126,6 +126,7 @@ export default class Enter extends React.Component {
             });
             });
         }
+        else{window.location.href=window.location.origin;}
 
     }
     //填写昵称

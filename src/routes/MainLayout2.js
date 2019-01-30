@@ -21,7 +21,7 @@ export default class MainLayout2 extends React.Component {
         this.setState({defaultSelectedKeys:pathname});
         //根据userName查询头像、username
         const userName=store.get("username");
-        if(userName){
+        if(userName!==undefined&&userName.username){
             const content =this;
             //联网获取userinfo
             return fetch(`${programHost.APIhost}/user/info`, {
@@ -54,7 +54,7 @@ export default class MainLayout2 extends React.Component {
             cancelText:'取消',
             onOk() {
                 const userName=store.get("username");
-                if(userName){
+                if(userName!==undefined&&userName.username){
                     store.remove("username");
                     window.location.href=window.location.origin;
                 }

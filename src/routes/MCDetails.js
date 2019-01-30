@@ -20,8 +20,8 @@ export default class MCDetails extends React.Component {
             sendGiftNum:0,
             gotGiftsList:[],
             placeOrderModalVisiable:false,
-            orderTime:"",
-            orderPeriod:1,
+            orderTime:"",//开始日期
+            orderPeriod:1,//约玩周期（小时数）
             remark:"",
             selectedGame:{},
             orderPrice:0,
@@ -121,11 +121,36 @@ export default class MCDetails extends React.Component {
     placeOrder(item){
         const userName=store.get("username");
         if(!userName){message.warn('您还没登录，请先登录');return;}
-        console.log('selectedGame',item);
         this.setState({placeOrderModalVisiable:true,selectedGame:item}); 
+        
     }
     //确认下单
     surePlaceOrder(){
+        const {MCDetail,selectedGame,}=this.state;
+        console.log('MCDetail:',MCDetail,);
+        console.log('selectedGame:',selectedGame);
+        const content =this;
+            // //联网获取userinfo
+            // return fetch(`${programHost.APIhost}/user/info`, {
+            // method: 'GET',
+            // mode: 'cors',
+            // credentials: 'include',
+            // headers: new Headers({
+            //     Accept: 'application/json',
+            //     'Content-Type': 'application/json;charset=UTF-8',
+            //     'Authorization':programHost.getAuth('/user/info'),// 除登录之外，获取登录的token都不需要username和password
+            // }),
+            // }).then((response) => {
+            // console.log(response);
+            // response.json().then((res) => {
+            //     console.log(res);
+            //     if(res.statusCode===107){
+            //         content.setState({accountLeft:res.resource.diamonds});
+            //     }
+            //     },(data) => {
+            //     console.log(data)
+            // });
+            // });
 
     }
     cancelPlaceOrder(){
@@ -151,7 +176,7 @@ export default class MCDetails extends React.Component {
             // Can not select days before today and today
             return current && current < moment().endOf('day');
         }
-        console.log('MCDetail',MCDetail);
+        
         return (<div>
             <div className={styles.container}>
             {/* 头部标签栏 */}

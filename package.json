@@ -7,6 +7,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "antd": "^3.1.1",
     "array-tree-filter": "^2.1.0",
     "crypto-js": "^3.1.9-1",
@@ -22,7 +23,8 @@
     "react-dom": "^16.2.0",
     "react-draft-wysiwyg": "^1.12.13",
     "react-umeditor": "^1.0.0-rc12",
-    "store": "^2.0.12"
+    "store": "^2.0.12",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "babel-plugin-dva-hmr": "^0.3.2",

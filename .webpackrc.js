@@ -1,4 +1,11 @@
 export default {
+    entry: {
+        index: ['@babel/polyfill', 'whatwg-fetch', './src/index.js'],
+    },
+    // output: {
+    //     path: path.resolve(__dirname, 'dist/'),
+    //     filename: '[name].js',
+    // },
     theme: {
         '@primary-color': '#fa6543',
         '@link-color': '#fa6543',

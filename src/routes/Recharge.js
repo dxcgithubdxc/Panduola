@@ -31,7 +31,7 @@ export default class Recharge extends React.Component {
     UNSAFE_componentWillMount(){
         console.log(this.props);
         const userName=store.get("username");
-        if(userName){
+        if(userName!==undefined&&userName.username){
             const content =this;
             //联网获取userinfo
             return fetch(`${programHost.APIhost}/user/info`, {

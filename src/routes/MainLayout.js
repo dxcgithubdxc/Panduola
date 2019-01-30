@@ -46,10 +46,8 @@ export default class MainLayout extends Component {
   Enter(){
     const userName=store.get("username");
     console.log("@@@@@@",userName);
-    if(!userName){this.setState({loginModalVisible:true});return;}
-    else{
-      window.location.href=`${window.location.origin}/enter`;
-    }
+    if(userName!==undefined&&userName.username){window.location.href=`${window.location.origin}/enter`;}
+    else{this.setState({loginModalVisible:true});return;}
   }
   //获取验证码
   getIdentityCode(){
@@ -285,7 +283,6 @@ export default class MainLayout extends Component {
             activeKey={loginType}
             onChange={(key)=>{
               this.setState({
-                loginType:key, 
                 phoneNumber:"",//手机号
                 username:"",//用户名
                 password:"",//密码
