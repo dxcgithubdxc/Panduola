@@ -16,6 +16,7 @@ export default class Enter extends React.Component {
 	constructor(props) {
         super(props);
         this.state={
+            upToken:'',
             nickName:'',
             sex:1,
             birthday:"2019-01-01",
@@ -74,8 +75,29 @@ export default class Enter extends React.Component {
         ];
         if(userName!==undefined&&userName.username){
             const content =this;
+            //七牛uptoken
+            fetch(`https://www.neptune66.cn/qianxi/admin/goods/getQiNiuUpToken`, {
+                method: 'GET',
+                mode: 'cors',
+                credentials: 'include',
+                headers: new Headers({
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    // 'Authorization':programHost.getAuth('/user/apply/info'),// 除登录之外，获取登录的token都不需要username和password
+                }),
+                }).then((response) => {
+                response.json().then((res) => {
+                    console.log(res);
+                    if(res.code===1){
+                        content.setState({upToken:res.data.upToken});
+                    }
+                    },(data) => {
+                    console.log(data)
+                });
+                });
+
             //联网获取userinfo
-            return fetch(`${programHost.APIhost}/user/apply/info`, {
+            fetch(`${programHost.APIhost}/user/apply/info`, {
             method: 'GET',
             mode: 'cors',
             credentials: 'include',
@@ -155,9 +177,7 @@ export default class Enter extends React.Component {
     // 填写个性签名
     inputNatureSign(e){ this.setState({natureSign:e.target.value});}
     //上传APP首页封面图
-    handleChange(file){
-        console.log(file);
-    }
+    handleChange(file) {this.setState({fileList:file.fileList,goodsCoverImage:file.file.status=="done"?"http://pb9u1bgpu.bkt.clouddn.com/"+file.file.response.hash:""})}
     //预览APP首页封面图
     handlePreview(file){this.setState({ previewImg: file.url || file.thumbUrl,previewVisible: true,});}
     handleCancel(){this.setState({ previewVisible: false });}
@@ -170,42 +190,7 @@ export default class Enter extends React.Component {
     handlePreview3(file){this.setState({ previewImg: file.url || file.thumbUrl,previewVisible: true,});}
     handleCancel3(){this.setState({ previewVisible: false });}
 
-    //上传封面照片
-  getLocalImg(e){
-    const { uploadImageAct } = this.props;
-    const content = this;
-    var formData = new FormData();
-    formData.append("Filename", e.target.files[0].name);
-    formData.append("imgFile",e.target.files[0]);
-    fetch(`${programHost.APIhost}/file`, {
-        method: 'POST',
-        dataType: 'json',
-        body:JSON.stringify(formData),
-        mode: 'cors',
-        credentials: 'include',
-        headers: new Headers({
-            Accept: 'application/json',
-            'Content-Type': 'application/json;charset=UTF-8',
-            // 'Authorization':programHost.getAuth('/user/apply/tutor'),// 获取token
-        }),
-      }).then((response) => {
-        console.log(response);
-        response.json().then((res) => {
-            console.log(res);
-            // if(res.statusCode===107){
-            //     message.success(res.message);
-            //     content.UNSAFE_componentWillMount();
-            // }else{message.warn(res.message)}
-          },(data) => {
-          console.log(data)
-        });
-      });
-    // uploadImageAct(formData).then(function(data){
-    //   if(data.error==0){
-    //     content.setState({imgUrl:data.url});
-    //   }
-    // });
-  }
+    
     //填写身高
     inputStature(e){ this.setState({stature:e.target.value});}
     //填写体重
@@ -279,8 +264,8 @@ export default class Enter extends React.Component {
                     "nickname": nickName,
                     "sex": sex,
                     "birthday":birthday,
-                    province:province,
-                    city:city,
+                    "province":province,
+                    "city":city,
                     "cityCode":pickerValue,
                     "mobile": phoneNumber,
                     "QQ": QQNumber,
@@ -420,6 +405,7 @@ export default class Enter extends React.Component {
             LOLArea,//LOL大区
             LOLSection,//LOL段位
             GKSection,//王者段位
+            upToken,
         }=this.state;
         return ( <div > 
             <div className={styles.container}>
@@ -490,52 +476,31 @@ export default class Enter extends React.Component {
                         </Row>
                     </div>
                     <div className={styles.partItem}>
-                        {/* <Row>
+                        <Row>
                             <Col span={4}><div className={styles.partItemDiv}><span className={styles.partTopMust}>*</span>APP主页封面：</div></Col>
                             <Col span={4}>
                                 <div className={styles.partItemDiv2}>
                                     <Upload
-                                        action="http://www.pdlwan.com:5000/file"
-                                        listType="picture-card"
-                                        fileList={fileList}
-                                        onPreview={this.handlePreview.bind(this)}
-                                        onChange={this.handleChange.bind(this)}
+                                        action='http://upload-z1.qiniup.com'
+                                        data={{
+                                            token:this.state.upToken
+                                        }}
+                                       listType="picture-card"
+                                       fileList={this.state.fileList}
+                                       onPreview={this.handlePreview.bind(this)}
+                                       onChange={this.handleChange.bind(this)}
                                     >
-                                        <Button><Icon type="upload" />上传</Button>
+                                        {this.state.fileList.length >= 1 ? null :<div><Icon type="plus" /><div className="ant-upload-text">选择图片</div></div>}
                                     </Upload>
-                                    <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
-                                        <img alt="example" style={{ width: '100%' }} src={previewImg} />
+                                    {/*大图预览*/}
+                                    <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel.bind(this)}>
+                                    <img  style={{ width: '100%' }} alt='' src={previewImg} />
                                     </Modal>
                                 </div>
                             </Col>
                             {fileList.length >= 1 ?<Col span={4}><div className={styles.partItemDiv2}><img style={{width:100,height:100}} src={APPTopImg} alt="" /></div></Col>:""}
                             <Col span={12}><div className={styles.partItemDiv}>请上传您的主页封面照，建议大小为：750*1334</div></Col>
-                        </Row> */}
-                        <Row gutter={16} style={{marginTop:20}}>
-          <Col span={4} style={{textAlign:"right",paddingTop:6}}><h4>产品图片</h4></Col>
-          <Col span={12}>
-            <form id= "uploadForm">
-              <h4 className="clearMargin">
-                <style>
-                  {
-                    `
-                        .fengmianDiv{
-                          width: 246px;
-                          height: 130px;
-                        }
-                        .fengmianDiv input{ display:none;}
-                        .fengmianDiv img{ width: 110px; height: 130px;}
-                        `
-                  }
-                </style>
-                <label className="fengmianDiv">
-                  <input type="file" onChange={this.getLocalImg.bind(this)} />
-                  < img className="id_card" ref="cover" name="enter_imgsPath" src={this.state.imgUrl!=""?programHost+this.state.imgUrl:"/public/img/jia.jpg"} />
-                </label>
-              </h4>
-            </form>
-          </Col>
-        </Row>
+                        </Row>
                     </div>
                 </div>
                 {/* 选填资料 */}

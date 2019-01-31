@@ -151,7 +151,6 @@ export default class MCDetails extends React.Component {
             //     console.log(data)
             // });
             // });
-
     }
     cancelPlaceOrder(){
         return this.emptyOrder();
