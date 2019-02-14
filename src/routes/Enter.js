@@ -76,14 +76,13 @@ export default class Enter extends React.Component {
         if(userName!==undefined&&userName.username){
             const content =this;
             //七牛uptoken
-            fetch(`https://www.neptune66.cn/qianxi/admin/goods/getQiNiuUpToken`, {
+            fetch(`https://www.neptune66.cn/zhaoliangji/admin/goods/getPanDuoLaQiNiuUpToken`, {
                 method: 'GET',
                 mode: 'cors',
                 credentials: 'include',
                 headers: new Headers({
                     Accept: 'application/json',
                     'Content-Type': 'application/json;charset=UTF-8',
-                    // 'Authorization':programHost.getAuth('/user/apply/info'),// 除登录之外，获取登录的token都不需要username和password
                 }),
                 }).then((response) => {
                 response.json().then((res) => {
@@ -114,6 +113,8 @@ export default class Enter extends React.Component {
                 if(res.statusCode===107){
                     res.resource.serviceList.forEach((item,index)=>{ if(item.gameServiceStatus ===1){gameServiceNumArr.push(item.gameServiceNum);}});
                     content.setState({
+                        APPTopImg:res.resource.headerImg,
+                        stationImg:res.resource.serverCover,
                         gameServiceNumArr,
                         natureList,
                         glamourList,
@@ -177,18 +178,18 @@ export default class Enter extends React.Component {
     // 填写个性签名
     inputNatureSign(e){ this.setState({natureSign:e.target.value});}
     //上传APP首页封面图
-    handleChange(file) {this.setState({fileList:file.fileList,goodsCoverImage:file.file.status=="done"?"http://pb9u1bgpu.bkt.clouddn.com/"+file.file.response.hash:""})}
+    handleChange(file) { console.log(file); this.setState({fileList:file.fileList,APPTopImg:file.file.status==="done"?"http://panduola.media.neptune66.cn/"+file.file.response.hash:""})}
     //预览APP首页封面图
     handlePreview(file){this.setState({ previewImg: file.url || file.thumbUrl,previewVisible: true,});}
     handleCancel(){this.setState({ previewVisible: false });}
-
     //上传段位封面图
     handleChange3(file){
         console.log(file);
+        this.setState({fileList3:file.fileList,stationImg:file.file.status==="done"?"http://panduola.media.neptune66.cn/"+file.file.response.hash:""})
     }
     //预览段位封面图
-    handlePreview3(file){this.setState({ previewImg: file.url || file.thumbUrl,previewVisible: true,});}
-    handleCancel3(){this.setState({ previewVisible: false });}
+    handlePreview3(file){this.setState({ previewImg3: file.url || file.thumbUrl,previewVisible: true,});}
+    handleCancel3(){this.setState({ previewVisible3: false });}
 
     
     //填写身高
@@ -221,31 +222,13 @@ export default class Enter extends React.Component {
     //提交表单数据
     onSubmit(){
         const {
-            nickName,
-            sex,
-            province,
-            city,
-            pickerValue,
-            birthday,
-            phoneNumber,
-            QQNumber,
-            natureList,
-            checkedNatureList,//个性标签
-            natureSign,
-            fileList,
-            APPTopImg,
-            previewVisible,
-            previewImg,
-            stature,
-            weight,
-            job,
-            interests,
-            glamourList,
+            nickName,sex,province,city,pickerValue, birthday,phoneNumber,
+            QQNumber,natureList,fileList2, serviceList,
+            natureSign,fileList,APPTopImg, previewVisible,previewImg,stature, weight,job,
+            interests, glamourList,gameServiceNum,
             checkedglamourList,//魅力部位
-            fileList2,
-            serviceList,
-            gameServiceNum,
             gameServiceNumArr,// 已经开通的游戏
+            checkedNatureList,//个性标签
             stationImg,// 段位封面图
             LOLID,//LOLID
             LOLArea,//LOL大区
@@ -260,82 +243,61 @@ export default class Enter extends React.Component {
             if(gameServiceNum===1){//如果选择了LOL
                 if(LOLID==="" ||LOLArea===""||LOLSection===""){message.warn('请完善您的LOL信息！！');return;}
                 sbdata={
-                    "headerImg": "string",
-                    "nickname": nickName,
-                    "sex": sex,
-                    "birthday":birthday,
-                    "province":province,
-                    "city":city,
-                    "cityCode":pickerValue,
-                    "mobile": phoneNumber,
-                    "QQ": QQNumber,
-                    "labels": checkedNatureList,//个性标签
-                    "autograph": natureSign,//个性签名
-                    "cover": "string",//APP封面图
-                    "height": Number(stature),
-                    "weight": Number(weight),
-                    "occupation": job,
-                    "interest": interests,
-                    "charmPosition": checkedglamourList,
+                    "headerImg": APPTopImg,"nickname": nickName,
+                    "sex": sex,"birthday":birthday,
+                    "province":province,"city":city,
+                    "cityCode":pickerValue,"mobile": phoneNumber,
+                    "QQ": QQNumber,"height": Number(stature),
+                    "weight": Number(weight),"occupation": job,
+                    "interest": interests,"charmPosition": checkedglamourList,
                     "videoId": "string",//视频
                     "gameServiceNum": gameServiceNum,//开通服务的编号
-                    "serverCover": "string",//待审核的服务封面照
+                    "serverCover": stationImg,//待审核的服务封面照
                     "serverInfo": "string",//服务描述
                     "service_gameId": LOLID,
                     "service_gameQv": LOLArea,
                     "service_gameLevel": LOLSection,
                     "voiceId": "string",//语音介绍
+                    "labels": checkedNatureList,//个性标签
+                    "autograph": natureSign,//个性签名
+                    "cover": "string",//APP封面图
                     "state": 1
                 }
             } else if(gameServiceNum===3){
                 sbdata={
-                    "headerImg": "string",
-                    "nickname": nickName,
-                    "sex": sex,
-                    "birthday":birthday,
-                    province:province,
-                    city:city,
-                    "cityCode":pickerValue,
-                    "mobile": phoneNumber,
-                    "QQ": QQNumber,
+                    "headerImg": APPTopImg,"occupation": job,
+                    "interest": interests,"QQ": QQNumber,
+                    "charmPosition": checkedglamourList,"nickname": nickName,
+                    "sex": sex, "birthday":birthday,
+                    province:province, city:city,
+                    "cityCode":pickerValue, "mobile": phoneNumber,
                     "labels": checkedNatureList,//个性标签
                     "autograph": natureSign,//个性签名
                     "cover": "string",//APP封面图
                     "height": Number(stature),
                     "weight": Number(weight),
-                    "occupation": job,
-                    "interest": interests,
-                    "charmPosition": checkedglamourList,
+                    levels:GKSection,"state": 1,
                     "videoId": "string",//视频
                     "gameServiceNum": gameServiceNum,//开通服务的编号
-                    "serverCover": "string",//待审核的服务封面照
+                    "serverCover": stationImg,//待审核的服务封面照
                     "serverInfo": "string",//服务描述
-                    levels:GKSection,
                     "voiceId": "string",//语音介绍
-                    "state": 1
                 }
             }else{
                 sbdata={
-                    "headerImg": "string",
-                    "nickname": nickName,
-                    "sex": sex,
-                    "birthday":birthday,
-                    province:province,
-                    city:city,
-                    "cityCode":pickerValue,
-                    "mobile": phoneNumber,
-                    "QQ": QQNumber,
+                    "headerImg": APPTopImg, "nickname": nickName,
+                    "sex": sex,"birthday":birthday,
+                    province:province, city:city,
+                    "cityCode":pickerValue,"mobile": phoneNumber,"QQ": QQNumber,
                     "labels": checkedNatureList,//个性标签
                     "autograph": natureSign,//个性签名
                     "cover": "string",//APP封面图
                     "height": Number(stature),
-                    "weight": Number(weight),
-                    "occupation": job,
-                    "interest": interests,
-                    "charmPosition": checkedglamourList,
+                    "weight": Number(weight),"occupation": job,
+                    "interest": interests,"charmPosition": checkedglamourList,
                     "videoId": "string",//视频
                     "gameServiceNum": gameServiceNum,//开通服务的编号
-                    "serverCover": "string",//待审核的服务封面照
+                    "serverCover": stationImg,//待审核的服务封面照
                     "serverInfo": "string",//服务描述
                     "voiceId": "string",//语音介绍
                     "state": 1
@@ -373,26 +335,16 @@ export default class Enter extends React.Component {
     }
     render() {
         const{
-            nickName,
-            sex,
-            province,
-            city,
-            cityCode,
-            birthday,
-            phoneNumber,
-            QQNumber,
-            natureList,
-            checkedNatureList,
-            natureSign,
-            fileList,APPTopImg,
-            previewVisible,
-            previewImg,
-            stature,
-            weight,
-            job,
-            interests,
-            glamourList,
-            checkedglamourList,
+            nickName,sex,
+            province, city,
+            cityCode,birthday,
+            phoneNumber, QQNumber,
+            natureList,checkedNatureList,
+            natureSign,fileList,APPTopImg,
+            previewVisible,previewImg,
+            stature, weight,
+            job,interests,
+            glamourList,checkedglamourList,
             fileList2,
             serviceList,
             gameServiceNum,
@@ -478,6 +430,7 @@ export default class Enter extends React.Component {
                     <div className={styles.partItem}>
                         <Row>
                             <Col span={4}><div className={styles.partItemDiv}><span className={styles.partTopMust}>*</span>APP主页封面：</div></Col>
+                            <Col span={4}><div className={styles.partItemDiv2}><img style={{width:100,height:100}} src={APPTopImg} alt="" /></div></Col>
                             <Col span={4}>
                                 <div className={styles.partItemDiv2}>
                                     <Upload
@@ -498,7 +451,7 @@ export default class Enter extends React.Component {
                                     </Modal>
                                 </div>
                             </Col>
-                            {fileList.length >= 1 ?<Col span={4}><div className={styles.partItemDiv2}><img style={{width:100,height:100}} src={APPTopImg} alt="" /></div></Col>:""}
+                            
                             <Col span={12}><div className={styles.partItemDiv}>请上传您的主页封面照，建议大小为：750*1334</div></Col>
                         </Row>
                     </div>
@@ -588,10 +541,26 @@ export default class Enter extends React.Component {
                 <div className={styles.partItem}>
                     <Row>
                         <Col span={3}><div className={styles.partItemDiv}><span className={styles.partTopMust}>*</span>服务封面照：</div></Col>
-                        {fileList3.length >= 1 ?<Col span={2}><div className={styles.partItemDiv2}><img style={{width:100,height:100}} src={stationImg} alt="" /></div></Col>:""}
+                        <Col span={4}><div className={styles.partItemDiv2}><img style={{width:100,height:100}} src={stationImg} alt="" /></div></Col>
                         <Col span={4}>
                             <div className={styles.partItemDiv2}>
-                                <Upload
+                            <Upload
+                                        action='http://upload-z1.qiniup.com'
+                                        data={{
+                                            token:this.state.upToken
+                                        }}
+                                       listType="picture-card"
+                                       fileList={this.state.fileList3}
+                                       onPreview={this.handlePreview3.bind(this)}
+                                       onChange={this.handleChange3.bind(this)}
+                                    >
+                                        {this.state.fileList3.length >= 1 ? null :<div><Icon type="plus" /><div className="ant-upload-text">选择图片</div></div>}
+                                    </Upload>
+                                    {/*大图预览*/}
+                                    <Modal visible={this.state.previewVisible3} footer={null} onCancel={this.handleCancel3.bind(this)}>
+                                    <img  style={{ width: '100%' }} alt='' src={previewImg} />
+                                    </Modal>
+                                {/* <Upload
                                     action="//jsonplaceholder.typicode.com/posts/"
                                     listType="picture-card"
                                     fileList={fileList3}
@@ -602,7 +571,7 @@ export default class Enter extends React.Component {
                                 </Upload>
                                 <Modal visible={previewVisible3} footer={null} onCancel={this.handleCancel3.bind(this)}>
                                     <img alt="example" style={{ width: '100%' }} src={previewImg3} />
-                                </Modal>
+                                </Modal> */}
                             </div>
                         </Col>
                         <Col span={12}>

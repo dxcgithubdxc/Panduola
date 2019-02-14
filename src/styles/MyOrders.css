@@ -2,3 +2,14 @@
     width:1120px;
     margin:0  auto;
 }
+.partTop{
+    padding:10px 0 20px 0;
+    border-bottom: #eeeeee solid 1px;
+}
+.partTitle{
+    font-size: 20px;
+    font-weight: bold;
+}
+.tableDiv{
+    padding:15px 0;
+}

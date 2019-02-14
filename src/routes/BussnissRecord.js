@@ -14,7 +14,12 @@ UNSAFE_componentWillMount(){
         return;
     }
 }
-    render() {return ( <div className={styles.container}>BussnissRecord</div>)}
+    render() {
+        return ( <div className={styles.container}>
+            <div className={styles.partTop}><span className={styles.partTitle}>▎我的交易记录</span></div>
+                <div className={styles.tableDiv}></div>
+        </div>)
+    }
 }
 
 

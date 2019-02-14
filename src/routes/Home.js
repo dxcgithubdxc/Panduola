@@ -21,6 +21,7 @@ import newShow4 from '../assets/newShow4.jpg';
 import newShow5 from '../assets/newShow5.jpg';
 import newShow6 from '../assets/newShow6.jpg';
 import example1 from '../assets/example1.jpg';
+import { message } from 'antd';
 const store=require('store');
 export default class Home extends React.Component {
 	constructor(props) {
@@ -51,16 +52,25 @@ export default class Home extends React.Component {
             content.setState({homeHotRecommendArr:data.resource});
             });
         });
-        // const homeHotRecommendArr=[
-        //     {title:'最强王者',supervisorName:'瞳瞳', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'200',tips:['激情四射','颜值担当'],image:zb01,MCPosition:'上海',sex:0},
-        //     {title:'超凡大师',supervisorName:'大司马', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'1314',tips:['技术大师','逗比闲聊'],image:zb02,MCPosition:'上海',sex:1},
-        //     {title:'无畏青铜',supervisorName:'德云色', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'478',tips:['激情四射','颜值担当'],image:zb03,MCPosition:'上海',sex:1},
-        //     {title:'荣耀黄金',supervisorName:'PDD', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'456',tips:['激情四射','颜值担当'],image:zb05,MCPosition:'上海',sex:1},
-        //     {title:'不屈白银',supervisorName:'卢本伟', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'666',tips:['激情四射','颜值担当'],image:zb05,MCPosition:'上海',sex:0},
-        //     {title:'华贵白金',supervisorName:'周淑怡', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'777',tips:['激情四射','颜值担当'],image:zb06,MCPosition:'上海',sex:0},
-        //     {title:'璀璨钻石',supervisorName:'骚男', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'999',tips:['激情四射','颜值担当'],image:zb07,MCPosition:'上海',sex:1},
-        //     {title:'英勇黑铁',supervisorName:'浪子彦', palyItem:['英雄联盟','绝地求生','虚拟恋人','声优聊天','哄睡觉','叫醒','刺激战场'], price:'1456',tips:['激情四射','颜值担当'],image:zb08,MCPosition:'上海',sex:0},
-        // ];
+        fetch(`${programHost.APIhost}/user/consumption/rank/1/10`, {
+            method: 'POST',
+            dataType: 'json',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'text/plain;charset=UTF-8',
+            }),
+        }).then((res) => {
+            res.json().then((data) => {
+            console.log(data);
+            if(data.resource.length===0){
+                message.warn('还没有产生用户消费榜单！！');
+            }else{
+                // Todo：设置用户消费榜单
+
+            }
+            
+            });
+        });
         const newShowArr =[
              {newShowImage:newShow1,newShowName:'jiajia',newShowPosition:'上海',newShowSex:1,newShowAge:21,},
              {newShowImage:newShow2,newShowName:'jiajia',newShowPosition:'上海',newShowSex:1,newShowAge:22,},
@@ -69,7 +79,7 @@ export default class Home extends React.Component {
              {newShowImage:newShow5,newShowName:'jiajia',newShowPosition:'上海',newShowSex:0,newShowAge:24,},
              {newShowImage:newShow6,newShowName:'jiajia',newShowPosition:'上海',newShowSex:'fmale',newShowAge:26,},
         ];
-        const exampleHotArr=[
+        const exampleHotArr=[//热度榜
             {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:1,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
             {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:0,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
             {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:0,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
@@ -81,7 +91,7 @@ export default class Home extends React.Component {
             {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:1,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
             {exampleHotImg:example1,exampleHotName:'程思琪',exampleHotPosition:'南通市',exampleHotSex:1,exampleHotAge:19,exampleHotTimes:123,exampleHotStation:'最强王者',},
         ];
-        const exampleGiftArr=[
+        const exampleGiftArr=[//礼物榜
             {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:1,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
             {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:0,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
             {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:1,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
@@ -93,7 +103,7 @@ export default class Home extends React.Component {
             {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:1,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
             {exampleGiftImg:example1,exampleGiftName:'程思琪',exampleGiftPosition:'南通市',exampleGiftSex:0,exampleGiftAge:19,exampleGiftNumber:123,exampleGiftStation:'最强王者',},
         ];
-        const exampleRichArr=[
+        const exampleRichArr=[//富豪榜
             {exampleRichImg:example1,exampleRichName:'xifeng',exampleRichNumber:10086,},
             {exampleRichImg:example1,exampleRichName:'xifeng',exampleRichNumber:10086,},
             {exampleRichImg:example1,exampleRichName:'xifeng',exampleRichNumber:10086,},

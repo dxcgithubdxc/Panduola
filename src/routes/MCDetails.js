@@ -15,80 +15,90 @@ export default class MCDetails extends React.Component {
             MCDetail:{},//主播详情
             MCimgArr:[],
             selectedMCImg:'',
-            giftsArr:[],
+            giftsArr1:[],
+            giftsArr2:[],
+            giftsArr3:[],
             selectedGiftItem:{},
-            sendGiftNum:0,
+            sendGiftNum:1,
             gotGiftsList:[],
             placeOrderModalVisiable:false,
-            orderTime:"",//开始日期
+            orderTime:0,//开始日期
             orderPeriod:1,//约玩周期（小时数）
             remark:"",
             selectedGame:{},
             orderPrice:0,
             accountLeft:0,
+            xingzuo:'',
         }
   }
+    getAstro(m,d){
+    return "魔羯水瓶双鱼牡羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯".substr(m*2-(d<"102223444433".charAt(m-1)- -19)*2,2);
+    }
     UNSAFE_componentWillMount(){
-        const mcdetail=store.get('mcdetail');
-        const content = this;
-        content.setState({MCDetail:mcdetail});
-        const imgArr=[
-            'https://tuwanpicshare.oss-cn-qingdao.aliyuncs.com/dyimage/359133_QTjZGPXebk_1536076178724.jpg?.jpg',
-            'https://tuwanpicshare.oss-cn-qingdao.aliyuncs.com/dyimage/359133_nBWNbhpsC3_1541194282782.jpg?.jpg',
-            'http://img3.tuwandata.com/uploads/play/201803/359133-05054952.jpeg?.jpg',
-            'http://img3.tuwandata.com/uploads/play/201803/359133-03091147.jpeg?.jpg',
-        ];
-        const giftArr=[
-            [
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:1},
-                {title:'烟火',img:'http://img3.tuwandata.com/uploads/play/1142101545745926.png',giftIndex:2},
-                {title:'平安果',img:'http://img3.tuwandata.com/uploads/play/1869951544500364.png',giftIndex:3},
-                {title:'玫瑰',img:'http://img3.tuwandata.com/uploads/play/1898151532696070.png',giftIndex:4},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:5},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:6},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:7},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:8},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:9},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:10},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:11},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:12},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:13},
-            ],
-            [
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:14},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:15},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:16},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:17},
-            ],
-            [
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:18},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:19},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:20},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:21},
-                {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:22},
-            ],
-        ];
-        const giftsList=[
-            {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:1,num:2},
-            {title:'烟火',img:'http://img3.tuwandata.com/uploads/play/1142101545745926.png',giftIndex:2,num:2},
-            {title:'平安果',img:'http://img3.tuwandata.com/uploads/play/1869951544500364.png',giftIndex:3,num:2},
-            {title:'玫瑰',img:'http://img3.tuwandata.com/uploads/play/1898151532696070.png',giftIndex:4,num:2},
-            {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:5,num:2},
-            {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:6,num:2},
-            {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:7,num:2},
-            {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:8,num:2},
-            {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:9,num:2},
-            {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:10,num:2},
-            {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:11,num:2},
-            {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:12,num:2},
-            {title:'香吻',img:'http://img3.tuwandata.com/uploads/play/1629711503976254.png',giftIndex:13,num:2},
-        ];
-        this.setState({MCimgArr:imgArr,selectedMCImg:imgArr[0],giftsArr:giftArr,selectedGiftItem:giftArr[0][0],gotGiftsList:giftsList});
         const userName=store.get("username");
+        const mcdetail=store.get('mcdetail');
+        console.log('mcdetail',mcdetail);
+        let xingzuoArr = mcdetail.birthday.split('-');
+        this.setState({xingzuo:this.getAstro(xingzuoArr[1],xingzuoArr[2])})
+        const content = this;
+        content.setState({
+            MCDetail:mcdetail
+        });
+        this.setState({MCimgArr:mcdetail.moreImg,selectedMCImg:mcdetail.moreImg[0]});
+        // 前台页面获得所有的礼物信息
+        fetch(`${programHost.APIhost}/user/get/gift/all`, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization':programHost.getAuth('/user/get/gift/all'),// 除登录之外，获取登录的token都不需要username和password
+            }),
+            }).then((response) => {
+            response.json().then((res) => {
+                console.log('前台页面获得所有的礼物信息',res);
+                if(res.statusCode===107){
+                    content.setState({
+                        giftsArr1:res.resource.giftTyp1,
+                        giftsArr2:res.resource.giftTyp2,
+                        giftsArr3:res.resource.giftTyp3,
+                        selectedGiftItem:res.resource.giftTyp1[0],
+                    });
+                }
+                },(data) => {
+                console.log(data)
+            });
+            });
+        if(mcdetail&&userName!==undefined&&userName.username){
+            const sbdata0={anchorId:mcdetail._id}
+            //联网获取主播的礼物列表
+            fetch(`${programHost.APIhost}/anchor/gift/contribution/list`, {
+                method: 'POST',
+                mode: 'cors',
+                body:JSON.stringify(sbdata0),
+                credentials: 'include',
+                headers: new Headers({
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    'Authorization':programHost.getAuth('/anchor/gift/contribution/list'),// 除登录之外，获取登录的token都不需要username和password
+                }),
+                }).then((response) => {
+                
+                response.json().then((res) => {
+                    console.log('主播的礼物列表',res);
+                    if(res.statusCode===107){
+                        //主播的礼物列表
+                        content.setState({gotGiftsList:res.resource})
+                    }
+                    },(data) => {
+                    console.log(data)
+                });
+                });
+        }
         if(userName!==undefined&&userName.username){
-            const content =this;
             //联网获取userinfo
-            return fetch(`${programHost.APIhost}/user/info`, {
+            fetch(`${programHost.APIhost}/user/info`, {
             method: 'GET',
             mode: 'cors',
             credentials: 'include',
@@ -98,14 +108,11 @@ export default class MCDetails extends React.Component {
                 'Authorization':programHost.getAuth('/user/info'),// 除登录之外，获取登录的token都不需要username和password
             }),
             }).then((response) => {
-            console.log(response);
-            response.json().then((res) => {
-                console.log(res);
-                if(res.statusCode===107){
-                    content.setState({accountLeft:res.resource.diamonds});
-                }
-                },(data) => {
-                console.log(data)
+                response.json().then((res) => {
+                    console.log('联网获取userinfo',res);
+                    if(res.statusCode===107){content.setState({accountLeft:res.resource.diamonds});}
+                },(err) => {
+                    console.log('err',err);
             });
             });
         }
@@ -116,41 +123,88 @@ export default class MCDetails extends React.Component {
     sendGift(){
         const userName=store.get("username");
         if(!userName.username){message.warn('您还没登录，请先登录');return;}
+        const {selectedGiftItem,MCDetail,sendGiftNum,accountLeft}=this.state;
+        console.log('MCDetail',MCDetail);
+        console.log('selectedGiftItem',selectedGiftItem);
+        console.log('sendGiftNum',sendGiftNum);
+        console.log(programHost.getAuth(`/user/giving/gift/anchor/${MCDetail._id}`) )
+        if(sendGiftNum<1){message.warn('礼物数量至少为1个！！');return;}
+        // if(accountLeft<)
+        const content = this;
+        const sbdata={
+            giftId: selectedGiftItem._id,
+            number: sendGiftNum,
+        }
+        console.log('sbdata',sbdata);
+        fetch(`${programHost.APIhost}/user/giving/gift/anchor/${MCDetail._id}`, {
+            method: 'POST',
+            mode: 'cors',
+            body:JSON.stringify(sbdata),
+            credentials: 'include',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization':programHost.getAuth(`/user/giving/gift/anchor/${MCDetail._id}`),// 除登录之外，获取登录的token都不需要username和password
+            }),
+            }).then((response) => {
+            response.json().then((res) => {
+                    console.log(res);
+                    if(res.statusCode===102){
+                        message.success(res.message);
+                        content.UNSAFE_componentWillMount();
+                    }else{
+                        message.warn(res.message);
+                    }
+                },(data) => {
+                console.log(data)
+            });
+            });
     }
     //下单
     placeOrder(item){
         const userName=store.get("username");
-        if(!userName.username){message.warn('您还没登录，请先登录');return;}
+        if(!userName||!userName.username){message.warn('您还没登录，请先登录');return;}
         this.setState({placeOrderModalVisiable:true,selectedGame:item}); 
-        
     }
     //确认下单
     surePlaceOrder(){
-        const {MCDetail,selectedGame,}=this.state;
-        console.log('MCDetail:',MCDetail,);
-        console.log('selectedGame:',selectedGame);
+        const {MCDetail,selectedGame,orderTime,orderPeriod}=this.state;
+        console.log(orderPeriod);
+        if(orderTime===0){message.warn('请选择约玩开始时间');return;}
+        if(orderPeriod<1){message.warn('请填写约玩周期');return;}
         const content =this;
-            // //联网获取userinfo
-            // return fetch(`${programHost.APIhost}/user/info`, {
-            // method: 'GET',
-            // mode: 'cors',
-            // credentials: 'include',
-            // headers: new Headers({
-            //     Accept: 'application/json',
-            //     'Content-Type': 'application/json;charset=UTF-8',
-            //     'Authorization':programHost.getAuth('/user/info'),// 除登录之外，获取登录的token都不需要username和password
-            // }),
-            // }).then((response) => {
-            // console.log(response);
-            // response.json().then((res) => {
-            //     console.log(res);
-            //     if(res.statusCode===107){
-            //         content.setState({accountLeft:res.resource.diamonds});
-            //     }
-            //     },(data) => {
-            //     console.log(data)
-            // });
-            // });
+        const sbdata={
+            "anchorId": MCDetail._id,
+            "gameId": selectedGame._id,
+            "dayTime": orderTime.toString(),
+            "startTiem": orderTime.toString(),
+            "number": Number(orderPeriod),
+            "type": 1
+          }
+          console.log(sbdata);
+            //确认下单约主播
+            return fetch(`${programHost.APIhost}/order/alipay/payment`, {
+            method: 'POST',
+            mode: 'cors',
+            body:JSON.stringify(sbdata),
+            credentials: 'include',
+            headers: new Headers({
+                Accept: 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization':programHost.getAuth('/order/alipay/payment'),// 除登录之外，获取登录的token都不需要username和password
+            }),
+            }).then((response) => {
+            response.json().then((res) => {
+                console.log(res);
+                if(res.statusCode===107){
+                    window.location.href=res.resource;
+                }else{
+                    message.warn(res.message);
+                }
+                },(data) => {
+                console.log(data)
+            });
+            });
     }
     cancelPlaceOrder(){
         return this.emptyOrder();
@@ -165,7 +219,7 @@ export default class MCDetails extends React.Component {
         })
     }
     render() {
-        const {MCDetail,MCimgArr,selectedMCImg,giftsArr,selectedGiftItem,sendGiftNum,gotGiftsList,placeOrderModalVisiable,orderTime,orderPeriod,orderPrice,remark,selectedGame,accountLeft}=this.state;
+        const {MCDetail,MCimgArr,xingzuo,selectedMCImg,giftsArr1,giftsArr2,giftsArr3,selectedGiftItem,sendGiftNum,gotGiftsList,placeOrderModalVisiable,orderTime,orderPeriod,orderPrice,remark,selectedGame,accountLeft}=this.state;
         const wxPlaceOrderContent = (
             <div>
               <img style={{width:145,height:145}} src={ewm1} alt="" />
@@ -210,11 +264,12 @@ export default class MCDetails extends React.Component {
                                 <img className={styles.MCDetailImgBig} src={selectedMCImg} alt=""/>
                                 <div className={styles.MCDetailImgSmallList}>
                                     <Row gutter={28}>
-                                       {MCimgArr.map((item,index)=>{return(
+                                        {MCimgArr.map((item,index)=>{return(
                                             <Col span={6} key={index}>
                                                 <img onClick={()=>{this.setState({selectedMCImg:item})}} className={selectedMCImg===item?styles.MCDetailImgSmallCheck:styles.MCDetailImgSmall} src={item} alt=""/>
                                             </Col>
-                                       )})}</Row>
+                                        )})}
+                                    </Row>
                                 </div>
                             </div>
                             {/*送礼物  */}
@@ -223,12 +278,21 @@ export default class MCDetails extends React.Component {
                                     <TabPane tab="礼物" key="1">
                                         <div className={styles.sendGiftsItem}>
                                             <Row>
-                                                {giftsArr[0].map((item,index)=>{return(
+                                                {giftsArr1.map((item,index)=>{return(
                                                     <Col span={6} key={index}>
-                                                        <Popover content={(<div>{item.title}</div>)} title="礼物介绍" trigger="hover">
-                                                            <div className={selectedGiftItem.giftIndex===item.giftIndex?styles.giftDivCheck:styles.giftDiv} onClick={this.checkGift.bind(this,item)}>
-                                                                <img src={item.img} className={styles.giftImg} alt=""/>
-                                                                <div className={styles.giftName}>{item.title}</div>
+                                                        <Popover 
+                                                             content={(<div>
+                                                            <p>礼物名称：{item.name}</p>
+                                                            <p>礼物价格：{item.price}钻石</p>
+                                                            <p>礼物介绍：{item.note}</p>
+                                                            </div>)}
+                                                            title="礼物介绍"
+                                                            trigger="hover"
+                                                        >
+                                                            <div className={selectedGiftItem._id===item._id?styles.giftDivCheck:styles.giftDiv} onClick={this.checkGift.bind(this,item)}>
+                                                                <img src={item.icon} className={styles.giftImg} alt=""/>
+                                                                <p className={styles.giftName}>{item.name}</p>
+                                                                
                                                             </div>
                                                         </Popover>
                                                     </Col>
@@ -239,12 +303,20 @@ export default class MCDetails extends React.Component {
                                     <TabPane tab="冠名" key="2">
                                         <div className={styles.sendGiftsItem}>
                                             <Row>
-                                                {giftsArr[1].map((item,index)=>{return(
+                                                {giftsArr2.map((item,index)=>{return(
                                                     <Col span={6} key={index}>
-                                                        <Popover content={(<div>{item.title}</div>)} title="礼物介绍" trigger="hover">
-                                                            <div className={selectedGiftItem.giftIndex===item.giftIndex?styles.giftDivCheck:styles.giftDiv} onClick={this.checkGift.bind(this,item)}>
-                                                                <img src={item.img} className={styles.giftImg} alt=""/>
-                                                                <div className={styles.giftName}>{item.title}</div>
+                                                        <Popover 
+                                                             content={(<div>
+                                                            <p>礼物名称：{item.name}</p>
+                                                            <p>礼物价格：{item.price}钻石</p>
+                                                            <p>礼物介绍：{item.note}</p>
+                                                            </div>)}
+                                                            title="礼物介绍"
+                                                            trigger="hover"
+                                                        >
+                                                            <div className={selectedGiftItem._id===item._id?styles.giftDivCheck:styles.giftDiv} onClick={this.checkGift.bind(this,item)}>
+                                                                <img src={item.icon} className={styles.giftImg} alt=""/>
+                                                                <div className={styles.giftName}>{item.name}</div>
                                                             </div>
                                                         </Popover>
                                                     </Col>
@@ -255,12 +327,20 @@ export default class MCDetails extends React.Component {
                                     <TabPane tab="活动礼" key="3">
                                         <div className={styles.sendGiftsItem}>
                                             <Row>
-                                                {giftsArr[2].map((item,index)=>{return(
+                                                {giftsArr3.map((item,index)=>{return(
                                                     <Col span={6} key={index}>
-                                                        <Popover content={(<div>{item.title}</div>)} title="礼物介绍" trigger="hover">
-                                                            <div className={selectedGiftItem.giftIndex===item.giftIndex?styles.giftDivCheck:styles.giftDiv} onClick={this.checkGift.bind(this,item)}>
-                                                                <img src={item.img} className={styles.giftImg} alt=""/>
-                                                                <div className={styles.giftName}>{item.title}</div>
+                                                        <Popover 
+                                                             content={(<div>
+                                                            <p>礼物名称：{item.name}</p>
+                                                            <p>礼物价格：{item.price}钻石</p>
+                                                            <p>礼物介绍：{item.note}</p>
+                                                            </div>)}
+                                                            title="礼物介绍"
+                                                            trigger="hover"
+                                                        >
+                                                            <div className={selectedGiftItem._id===item._id?styles.giftDivCheck:styles.giftDiv} onClick={this.checkGift.bind(this,item)}>
+                                                                <img src={item.icon} className={styles.giftImg} alt=""/>
+                                                                <div className={styles.giftName}>{item.name}</div>
                                                             </div>
                                                         </Popover>
                                                     </Col>
@@ -272,7 +352,7 @@ export default class MCDetails extends React.Component {
                                 <div style={{height:30,lineHeight:'30px',fontSize:12}}>剩余钻石：{accountLeft}</div>
                                 <div className={styles.inputGiftNum}>
                                     <Row>
-                                        <Col span={8}>已选礼物：{selectedGiftItem.title}</Col>
+                                        <Col span={8}>已选礼物：{selectedGiftItem.name}</Col>
                                         <Col span={8}><InputNumber min={1} defaultValue={1} vlue={sendGiftNum}  onChange={(val)=>{this.setState({sendGiftNum:val});}} /></Col>
                                         <Col span={8}><Button onClick={()=>{this.sendGift();}}>赠送</Button></Col>
                                     </Row>
@@ -283,7 +363,7 @@ export default class MCDetails extends React.Component {
                             <Tabs defaultActiveKey="1">
                                 <TabPane tab="个人资料" key="1">
                                     <div className={styles.MCSelfMsgItem}><Row><Col span={6}>身高：</Col><Col span={4}>{MCDetail.height}CM</Col></Row></div>
-                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>星座：</Col><Col span={18}>{MCDetail.height}摩羯座</Col></Row></div>
+                                    <div className={styles.MCSelfMsgItem}><Row><Col span={6}>星座：</Col><Col span={18}>{xingzuo}座</Col></Row></div>
                                     <div className={styles.MCSelfMsgItem}><Row><Col span={6}>职业：</Col><Col span={18}>{MCDetail.occupation}</Col></Row></div>
                                     <div className={styles.MCSelfMsgItem}><Row><Col span={6}>魅力部位：</Col><Col span={18}>{MCDetail.charmPosition[0]}、{MCDetail.charmPosition[1]}、{MCDetail.charmPosition[2]}</Col></Row></div>
                                     <div className={styles.MCSelfMsgItem}> <Row><Col span={6}>个性标签：</Col><Col span={18}>{MCDetail.labels[0]}、{MCDetail.labels[1]}</Col></Row></div>
@@ -301,10 +381,18 @@ export default class MCDetails extends React.Component {
                                         <Row>
                                             {gotGiftsList.map((item,index)=>{return(
                                                 <Col span={3} key={index}>
-                                                    <Popover content={<div>123123</div>} title="礼物详情">
+                                                    <Popover 
+                                                        content={(<div>
+                                                        <p>礼物名称：{item.name}</p>
+                                                        <p>礼物价格：{item.price}钻石</p>
+                                                        <p>礼物介绍：{item.note}</p>
+                                                        </div>)}
+                                                        title="礼物介绍"
+                                                        trigger="hover"
+                                                    >
                                                         <div className={styles.gotGiftIem}>
-                                                            <img src='http://img3.tuwandata.com/uploads/play/1629711503976254.png' className={styles.gotGiftIemImg} alt=""/>
-                                                            <div className={styles.gotGiftIemMun}>1</div>
+                                                            <img src={item.icon} className={styles.gotGiftIemImg} alt=""/>
+                                                            <div className={styles.gotGiftIemMun}>{item.name}</div>
                                                         </div>
                                                     </Popover>
                                                 </Col>
@@ -330,14 +418,14 @@ export default class MCDetails extends React.Component {
                                                 </Col>
                                                 <Col span={8}>
                                                     <div className={styles.gameItemTitleMsg1}>
-                                                       <div className={styles.gameItemTitleStation}>{item.title}</div>
+                                                       <div className={styles.gameItemTitleStation}>{item.name}</div>
                                                        <div className={styles.gameItemTitleO}>{item.roteLabel}</div>
                                                        <div className={styles.gameItemTitleO}>接单次数：{item.orderNum?item.orderNum:0}次</div>
                                                     </div>
                                                 </Col>
                                                 <Col span={4}></Col>
-                                                <Col span={4}></Col>
-                                                <Col span={4}>
+                                                <Col span={3}></Col>
+                                                <Col span={5}>
                                                     <div className={styles.gameItemTitleMsg1}>
                                                        <div className={styles.gameItemTitlePrice}><span style={{fontSize:30,color:'red'}}>￥{item.price}</span>/次</div>
                                                        <div className={styles.gameItemTitlePrice}><Button type="primary" size="large" onClick={this.placeOrder.bind(this,item)}>下单约Ta</Button></div>
@@ -387,7 +475,7 @@ export default class MCDetails extends React.Component {
                         <Col span={16}>
                             <DatePicker
                                 locale={locale}
-                                onChange={(val,date)=>{ console.log(moment(date).valueOf());  this.setState({orderTime:date})}}
+                                onChange={(val,date)=>{console.log(date); console.log(moment(date).valueOf());  this.setState({orderTime:moment(date).valueOf()})}}
                                 format="YYYY-MM-DD HH:mm:ss"
                                 disabledDate={disabledDate}
                                 showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
